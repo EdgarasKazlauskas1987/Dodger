@@ -1,22 +1,20 @@
-# dodger
+﻿# Dodger
 
-A Clojure library designed to ... well, that part is up to you.
+The player must dodge (avoid) a bunch of enemies that fall from all sides of the screen. The longer the player can keep avoiding the boddies of enemies,
+the higher the score will get. The player is controlled with the arrow keys ↑ ↓ → ←.
+ 
 
-## Usage
+## Technologies used
 
-FIXME
++ Clojure functional programming language
++ Quil library for creating interactive drawings and animation
 
-## License
+## Getting Started
 
-Copyright © 2020 FIXME
+In order to run the project a small amount of prerequisites and additional steps have to be fulfilled.
 
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
+### Prerequisites
 
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
++ Intellij IDE (or any other supporting Clojure) installed
++ Cursive pluging installed (for Intellij IDE)
+
