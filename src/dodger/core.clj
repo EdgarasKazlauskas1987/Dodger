@@ -4,7 +4,8 @@
             [dodger.enemies.top-screen :as top-screen]))
 
 (defn draw-player [x y]
-  (quil/rect x y 50 50))
+  (quil/fill (quil/color 255 255 255))
+  (quil/rect x y 45 45))
 
 (def player-coordinates (atom {:x 410 :y 230}))
 
