@@ -1,6 +1,5 @@
 (ns dodger.player
-  (:require [quil.core :as quil]
-            [dodger.enemies.top-screen :as top-screen]))
+  (:require [quil.core :as quil]))
 
 (def player-coordinates (atom {:x 410 :y 230}))
 
@@ -18,7 +17,7 @@
 
 (defn draw-player [x y]
   (quil/fill (quil/color 255 255 255))
-  (quil/rect x y 45 45))
+  (quil/rect x y 30 30))
 
 (defn player-movement
   "Checking which key is pressed and calling corresponding function"
@@ -34,9 +33,3 @@
   []
   (when (quil/key-pressed?)
     (player-movement (quil/key-as-keyword))))
-
-(defn draw []
-  (quil/background 11)
-  (draw-player (get @player-coordinates :x) (get @player-coordinates :y))
-  (top-screen/top-enemies-update)
-  (top-screen/top-enemies-draw))

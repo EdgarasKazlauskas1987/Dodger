@@ -13,4 +13,4 @@
 (defn generate-size
   "Generating random size"
   []
-  (rand-nth [20 30 40 50]))
+  (rand-nth [35 40 50 60]))
