@@ -1,11 +1,12 @@
 (ns dodger.core
   (:gen-class)
-  (:require [quil.core :as quil]))
+  (:require [quil.core :as quil]
+            [dodger.enemies.top-screen :as top-screen]))
 
 (defn draw-player [x y]
   (quil/rect x y 50 50))
 
-(def player-coordinates (atom {:x 410 :y 400}))
+(def player-coordinates (atom {:x 410 :y 230}))
 
 (defn move-player-up []
   (swap! player-coordinates update-in [:y] - 7))
@@ -36,11 +37,14 @@
 
 (defn draw []
   (quil/background 11)
-  (draw-player (get @player-coordinates :x) (get @player-coordinates :y)))
+  (draw-player (get @player-coordinates :x) (get @player-coordinates :y))
+  (top-screen/top-enemies-update)
+  (top-screen/top-enemies-draw)
+  )
 
 (quil/defsketch pong
                 :title "Dodge"
-                :size [900 550]
+                :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 60))
                 :draw (fn [] (draw))
                 :key-pressed key-pressed)

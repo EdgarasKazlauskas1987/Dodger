@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="21e565a1-b552-41ee-b52c-a9d1fb9bf5d8" name="Default Changelist" comment="" />
+    <list default="true" id="21e565a1-b552-41ee-b52c-a9d1fb9bf5d8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/dodger/enemies/top_screen.clj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dodger/utils.clj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dodger/core.clj" beforeDir="false" afterPath="$PROJECT_DIR$/src/dodger/core.clj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Clojure Namespace" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1ZAtsI4m7fFSCDocOcC9rEXU3N1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -15,9 +31,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="cursive.last.file.extension.C\:/Users/Edgaras/Desktop/Projects/dodger/src" value="clj" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="ReplState" timestamp="1584300092844">{:repl-history {:ide [], :local [{:command &quot;(move-player-up)&quot;, :offset 16, :ns &quot;dodger.core&quot;} {:command &quot;(def player-coordinates (atom {:x 0 :y 0}))&quot;, :offset 43, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] -7)&quot;, :offset 44, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] (-7))&quot;, :offset 46, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] - 7)&quot;, :offset 45, :ns &quot;dodger.core&quot;}], :remote []}}</component>
-  <component name="RunManager">
+  <component name="ReplState" timestamp="1586530400002">{:repl-history {:ide [], :local [{:command &quot;(move-player-up)&quot;, :offset 16, :ns &quot;dodger.core&quot;} {:command &quot;(def player-coordinates (atom {:x 0 :y 0}))&quot;, :offset 43, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] -7)&quot;, :offset 44, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] (-7))&quot;, :offset 46, :ns &quot;dodger.core&quot;} {:command &quot;(swap! player-coordinates update-in [:y] - 7)&quot;, :offset 45, :ns &quot;dodger.core&quot;} {:command &quot;(def enemy {:x 500 :y 300})&quot;, :offset 27, :ns &quot;dodger.core&quot;} {:command &quot;(reset! enemy :x 150)&quot;, :offset 21, :ns &quot;dodger.core&quot;} {:command &quot;(swap! enemy update-in [:y] = 0)&quot;, :offset 32, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (get enemy :x) 55 )&quot;, :offset 27, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (get @enemy :x)  + 55)&quot;, :offset 30, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (get @enemy :x) 55)&quot;, :offset 27, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (@enemy :x) 55)&quot;, :offset 23, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (enemy :x) 55)&quot;, :offset 22, :ns &quot;dodger.core&quot;} {:command &quot;(reset! enemy [:y] 5)&quot;, :offset 21, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (enemy [:y]) 5)&quot;, :offset 23, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (@enemy [:y]) 5)&quot;, :offset 24, :ns &quot;dodger.core&quot;} {:command &quot;(get enemy :x)&quot;, :offset 14, :ns &quot;dodger.core&quot;} {:command &quot;(get @enemy :x)&quot;, :offset 15, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (get @enemy :x) 5)&quot;, :offset 26, :ns &quot;dodger.core&quot;} {:command &quot;(reset! (get @fast-enemy :x) 5)&quot;, :offset 31, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(get @fast-enemy :x)&quot;, :offset 20, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(reset! 6 5)&quot;, :offset 12, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(def sudas (atom 5))&quot;, :offset 20, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(reset! sudas 10)&quot;, :offset 17, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;sudas&quot;, :offset 5, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(def enemy (atom {:x 500 :y 300}))&quot;, :offset 34, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(swap! enemy update-in [:y] 0)&quot;, :offset 30, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(swap! enemy update-in [:y] * 0)&quot;, :offset 32, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(reset! (enemy update-in [:y] 56))&quot;, :offset 34, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(reset! (enemy update-in [:y]) 56)&quot;, :offset 34, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;(reset! (@enemy update-in [:y]) 56)&quot;, :offset 35, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;enemy&quot;, :offset 5, :ns &quot;dodger.enemies.top-screen&quot;} {:command &quot;@enemy&quot;, :offset 6, :ns &quot;dodger.enemies.top-screen&quot;}], :remote []}}</component>
+  <component name="RunManager" selected="Clojure REPL.REPL for dodger">
     <configuration name="REPL for dodger" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false" temporary="true">
       <module name="dodger" />
       <setting name="replType" value="NREPL" />
@@ -51,9 +69,22 @@
       <module name="" />
       <method v="2" />
     </configuration>
+    <configuration name="top_screen" type="ClojureScriptRunConfiguration" factoryName="Clojure Script" temporary="true">
+      <module name="dodger" />
+      <setting name="path" value="$PROJECT_DIR$/src/dodger/enemies/top_screen.clj" />
+      <setting name="namespace" value="" />
+      <setting name="execution" value="INTELLIJ" />
+      <setting name="profiles" value="" />
+      <setting name="aliases" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="$PROJECT_DIR$/src/dodger/enemies" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Clojure REPL.REPL for dodger" />
+        <item itemvalue="Clojure Application.top_screen" />
       </list>
     </recent_temporary>
   </component>
@@ -71,9 +102,33 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1265" y="219" key="com.intellij.ide.util.TipDialog" timestamp="1584293963380">
+    <state width="1877" height="85" key="GridCell.Tab.0.bottom" timestamp="1586528570969">
+      <screen x="1366" y="-100" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="85" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.-100.1920.1040@1366.-100.1920.1040" timestamp="1586528570969" />
+    <state width="1877" height="85" key="GridCell.Tab.0.center" timestamp="1586528570969">
+      <screen x="1366" y="-100" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="85" key="GridCell.Tab.0.center/0.0.1366.728/1366.-100.1920.1040@1366.-100.1920.1040" timestamp="1586528570969" />
+    <state width="1877" height="85" key="GridCell.Tab.0.left" timestamp="1586528570968">
+      <screen x="1366" y="-100" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="85" key="GridCell.Tab.0.left/0.0.1366.728/1366.-100.1920.1040@1366.-100.1920.1040" timestamp="1586528570968" />
+    <state width="1877" height="85" key="GridCell.Tab.0.right" timestamp="1586528570969">
+      <screen x="1366" y="-100" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="85" key="GridCell.Tab.0.right/0.0.1366.728/1366.-100.1920.1040@1366.-100.1920.1040" timestamp="1586528570969" />
+    <state x="1827" y="62" key="SettingsEditor" timestamp="1586526202842">
+      <screen x="1366" y="-100" width="1920" height="1040" />
+    </state>
+    <state x="1827" y="62" key="SettingsEditor/0.0.1366.728/1366.-100.1920.1040@1366.-100.1920.1040" timestamp="1586526202842" />
+    <state x="-1265" y="219" key="com.intellij.ide.util.TipDialog" timestamp="1585080625174">
       <screen x="-1920" y="-124" width="1920" height="1040" />
     </state>
-    <state x="-1265" y="219" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-124.1920.1040@-1920.-124.1920.1040" timestamp="1584293963380" />
+    <state x="-1265" y="219" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-124.1920.1040@-1920.-124.1920.1040" timestamp="1585080625174" />
+    <state x="65" y="88" key="new project wizard" timestamp="1585080799841">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="65" y="88" key="new project wizard/0.0.1366.728/-1920.-124.1920.1040@0.0.1366.728" timestamp="1585080799841" />
   </component>
 </project>
