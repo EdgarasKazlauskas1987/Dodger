@@ -16,13 +16,21 @@
   []
   (quil/fill (quil/color 255 255 255))
   (quil/text-size 20)
-  (quil/text (str "TIME: " (str (int (Math/floor (/ @time-elapsed 80.0))))  ) 10 30 40))
+  (quil/text (str "TIME: " (str (int (Math/floor (/ @time-elapsed 80.0))))) 10 30 40))
+
+(defn draw-player-lives-left
+  "Drawing amount of player lives left"
+  []
+  (quil/fill (quil/color 255 255 255))
+  (quil/text-size 20)
+  (quil/text (str "LIVES: " (str @player/player-lives)) 10 65 60))
 
 (defn draw
   "Drawing all elements of the game"
   []
   (quil/background 11)
   (draw-elapsed-time)
+  (draw-player-lives-left)
   (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
   (top-screen/top-enemies-update)
   (top-screen/top-enemies-draw))

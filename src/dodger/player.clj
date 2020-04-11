@@ -19,6 +19,18 @@
   (quil/fill (quil/color 255 255 255))
   (quil/rect x y 30 30))
 
+(def player-lives (atom 3))
+
+(defn inc-player-lives
+  "Incrementing amount of player lives left"
+  []
+  (swap! player-lives inc))
+
+(defn dec-player-lives
+  "Decrementing amount of player lives left"
+  []
+  (swap! player-lives dec))
+
 (defn player-movement
   "Checking which key is pressed and calling corresponding function"
   [key]

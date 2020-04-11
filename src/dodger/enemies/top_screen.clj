@@ -56,7 +56,9 @@
       (set-to-start-position enemy)
       (do
         (if (collision? enemy)
-          (set-to-start-position enemy)
+          (do
+            (player/dec-player-lives)
+            (set-to-start-position enemy))
           (swap! enemy update-in [:y] + (get @enemy :speed))))
       )))
 
