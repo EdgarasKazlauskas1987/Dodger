@@ -10,9 +10,6 @@
 (def enemy3 (atom (struct-map right-enemy :x 900 :y 300 :width 20 :height 20 :speed 5)))
 (def enemy4 (atom (struct-map right-enemy :x 900 :y 200 :width 20 :height 20 :speed 6)))
 
-(def enemy5 (atom (struct-map right-enemy :x 900 :y 150 :width 20 :height 20 :speed 6)))
-(def enemy6 (atom (struct-map right-enemy :x 900 :y 50 :width 20 :height 20 :speed 6)))
-
 (def right-enemies (seq [enemy1
                         enemy2
                         enemy3
