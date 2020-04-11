@@ -3,12 +3,17 @@
 (defn generate-speed
   "Generating random enemy speed"
   []
-  (rand-nth [3 4 5 6 7]))
+  (rand-nth [2 3 4]))
 
 (defn generate-x-coordinate
-  "Generating random x coordinate"
+  "Generating random x coordinate between 0 and 880"
   []
-  (rand-int 870))
+  (rand-int 880))
+
+(defn generate-y-coordinate
+  "Generating random y coordinate between 0 and 630"
+  []
+  (rand-int 630))
 
 (defn generate-size
   "Generating random size"

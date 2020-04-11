@@ -4,16 +4,16 @@
 (def player-coordinates (atom {:x 410 :y 230}))
 
 (defn move-player-up []
-  (swap! player-coordinates update-in [:y] - 7))
+  (swap! player-coordinates update-in [:y] - 10))
 
 (defn move-player-down []
-  (swap! player-coordinates update-in [:y] + 7))
+  (swap! player-coordinates update-in [:y] + 10))
 
 (defn move-player-left []
-  (swap! player-coordinates update-in [:x] - 7))
+  (swap! player-coordinates update-in [:x] - 10))
 
 (defn move-player-right []
-  (swap! player-coordinates update-in [:x] + 7))
+  (swap! player-coordinates update-in [:x] + 10))
 
 (defn draw-player [x y]
   (quil/fill (quil/color 255 255 255))

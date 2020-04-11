@@ -1,27 +1,27 @@
-(ns dodger.enemies.top-screen
+(ns dodger.enemies.left-screen
   (:require [quil.core :as quil]
-            [dodger.utils :as utils]
-            [dodger.player :as player]))
+            [dodger.player :as player]
+            [dodger.utils :as utils]))
 
-(defstruct top-enemy :x :y :speed)
+(defstruct left-enemy :x :y :speed)
 
-(def enemy1 (atom (struct-map top-enemy :x 20 :y 0 :width 20 :height 20 :speed 3)))
-(def enemy2 (atom (struct-map top-enemy :x 50 :y 0 :width 20 :height 20 :speed 4)))
-(def enemy3 (atom (struct-map top-enemy :x 80 :y 0 :width 20 :height 20 :speed 5)))
-(def enemy4 (atom (struct-map top-enemy :x 110 :y 0 :width 20 :height 20 :speed 6)))
+(def enemy1 (atom (struct-map left-enemy :x 0 :y 590 :width 20 :height 20 :speed 3)))
+(def enemy2 (atom (struct-map left-enemy :x 0 :y 400 :width 20 :height 20 :speed 4)))
+(def enemy3 (atom (struct-map left-enemy :x 0 :y 300 :width 20 :height 20 :speed 5)))
+(def enemy4 (atom (struct-map left-enemy :x 0 :y 200 :width 20 :height 20 :speed 6)))
 
-(def enemy5 (atom (struct-map top-enemy :x 80 :y 0 :width 20 :height 20 :speed 5)))
-(def enemy6 (atom (struct-map top-enemy :x 110 :y 0 :width 20 :height 20 :speed 6)))
+(def enemy5 (atom (struct-map left-enemy :x 0 :y 150 :width 20 :height 20 :speed 6)))
+(def enemy6 (atom (struct-map left-enemy :x 0 :y 50 :width 20 :height 20 :speed 6)))
 
-(def top-enemies (seq [enemy1
+(def left-enemies (seq [enemy1
                         enemy2
                         enemy3
                         enemy4]))
 
 (defn outside?
-  "Checking if a top screen enemy is outside of screen limits"
+  "Checking if a left screen enemy is outside of screen limits"
   [enemy]
-  (if (> (get @enemy :y) 650)
+  (if (> (get @enemy :x) 900)
     true
     false))
 
@@ -43,16 +43,16 @@
   "Setting enemy to starting position"
   [enemy]
   (let [size (utils/generate-size)]
-    (swap! enemy assoc :y 0)
-    (swap! enemy assoc :x (utils/generate-x-coordinate))
+    (swap! enemy assoc :y (utils/generate-y-coordinate))
+    (swap! enemy assoc :x 0)
     (swap! enemy assoc :width size)
     (swap! enemy assoc :height size)
     (swap! enemy assoc :speed (utils/generate-speed))))
 
-(defn top-enemies-update
-  "Updating positions of all top screen enemies in the list"
+(defn left-enemies-update
+  "Updating positions of all left screen enemies in the list"
   []
-  (doseq [enemy top-enemies]
+  (doseq [enemy left-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
       (do
@@ -60,19 +60,17 @@
           (do
             (player/dec-player-lives)
             (set-to-start-position enemy))
-          (swap! enemy update-in [:y] + (get @enemy :speed))))
+          (swap! enemy update-in [:x] + (get @enemy :speed))))
       )))
 
-(defn draw-top-enemy
-  "Drawing an enemy in yellow color"
+(defn draw-left-enemy
+  "Drawing an enemy in x color"
   [x y length width]
-  (quil/fill (quil/color 255 255 0))
+  (quil/fill (quil/color 0 255 255))
   (quil/rect x y length width))
 
-(defn top-enemies-draw
-  "Drawing all top screen enemies in the list"
+(defn left-enemies-draw
+  "Drawing all left screen enemies in the list"
   []
-  (doseq [enemy top-enemies]
-    (draw-top-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
-
-
+  (doseq [enemy left-enemies]
+    (draw-left-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
