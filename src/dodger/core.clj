@@ -4,16 +4,32 @@
             [dodger.player :as player]
             [dodger.enemies.top-screen :as top-screen]))
 
-(defn draw []
+(def time-elapsed (atom 0))
+
+(defn count-time-elapsed
+  "Counting time elapsed by inc after every frame"
+  []
+  (swap! time-elapsed inc))
+
+(defn draw-elapsed-time
+  "Drawing elapsed time in seconds"
+  []
+  (quil/fill (quil/color 255 255 255))
+  (quil/text-size 20)
+  (quil/text (str "TIME: " (str (int (Math/floor (/ @time-elapsed 80.0))))  ) 10 30 40))
+
+(defn draw
+  "Drawing all elements of the game"
+  []
   (quil/background 11)
+  (draw-elapsed-time)
   (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
   (top-screen/top-enemies-update)
-  (top-screen/top-enemies-draw)
-  )
+  (top-screen/top-enemies-draw))
 
 (quil/defsketch pong
                 :title "Dodge"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80))
-                :draw (fn [] (draw))
+                :draw (fn [] (draw) (count-time-elapsed))
                 :key-pressed player/key-pressed)
