@@ -4,7 +4,8 @@
             [dodger.player :as player]
             [dodger.enemies.top-screen :as top-screen]
             [dodger.enemies.bottom-screen :as bottom-screen]
-            [dodger.enemies.left-screen :as left-screen]))
+            [dodger.enemies.left-screen :as left-screen]
+            [dodger.enemies.right-screen :as right-screen]))
 
 (def time-elapsed (atom 0))
 
@@ -36,14 +37,18 @@
   (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
   (top-screen/top-enemies-update)
   (top-screen/top-enemies-draw)
-  (when (> (/ @time-elapsed 80.0) 10)
+  (when (> (/ @time-elapsed 80.0) 30)
     (do
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw)))
-  (when (> (/ @time-elapsed 80.0) 20)
+  (when (> (/ @time-elapsed 80.0) 60)
     (do
       (left-screen/left-enemies-update)
-      (left-screen/left-enemies-draw))))
+      (left-screen/left-enemies-draw)))
+  (when (> (/ @time-elapsed 80.0) 90)
+    (do
+      (right-screen/right-enemies-update)
+      (right-screen/right-enemies-draw))))
 
 (quil/defsketch pong
                 :title "Dodge"
