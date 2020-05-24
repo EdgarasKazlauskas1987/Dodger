@@ -5,10 +5,32 @@
 
 (defstruct bottom-enemy :x :y :speed)
 
-(def enemy1 (atom (struct-map bottom-enemy :x 20 :y 650 :width 20 :height 20 :speed 3)))
-(def enemy2 (atom (struct-map bottom-enemy :x 50 :y 650 :width 20 :height 20 :speed 4)))
-(def enemy3 (atom (struct-map bottom-enemy :x 80 :y 650 :width 20 :height 20 :speed 5)))
-(def enemy4 (atom (struct-map bottom-enemy :x 110 :y 650 :width 20 :height 20 :speed 6)))
+(def default-y-coordinate 650)
+
+;; Creating initial objects of enemies
+(def enemy1
+  (let [size (utils/generate-size)]
+    (atom
+      (struct-map bottom-enemy
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+
+(def enemy2
+  (let [size (utils/generate-size)]
+    (atom
+      (struct-map bottom-enemy
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+
+(def enemy3
+  (let [size (utils/generate-size)]
+    (atom
+      (struct-map bottom-enemy
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+
+(def enemy4
+  (let [size (utils/generate-size)]
+    (atom
+      (struct-map bottom-enemy
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
 
 (def bottom-enemies (seq [enemy1
                            enemy2

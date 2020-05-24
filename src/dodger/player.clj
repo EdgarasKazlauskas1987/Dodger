@@ -19,7 +19,7 @@
   (quil/fill (quil/color 255 255 255))
   (quil/rect x y 30 30))
 
-(def player-lives (atom 3))
+(def player-lives (atom 5))
 
 (defn inc-player-lives
   "Incrementing amount of player lives left"
