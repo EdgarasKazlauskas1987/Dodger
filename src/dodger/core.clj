@@ -54,9 +54,11 @@
       (right-screen/right-enemies-draw))))
 
 (quil/defsketch pong
-                :title "Dodge"
+                :title "Dodger"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
-                         (quil/set-state! :star (quil/load-image "resources/star.png")))
+                         (quil/set-state!
+                           :star (quil/load-image "resources/star.png")
+                           :ghost (quil/load-image "resources/ghost40.png")))
                 :draw (fn [] (draw) (count-time-elapsed))
                 :key-pressed player/key-pressed)
