@@ -5,7 +5,8 @@
             [dodger.enemies.top-screen :as top-screen]
             [dodger.enemies.bottom-screen :as bottom-screen]
             [dodger.enemies.left-screen :as left-screen]
-            [dodger.enemies.right-screen :as right-screen]))
+            [dodger.enemies.right-screen :as right-screen]
+            [dodger.bonus.life :as bonus-life]))
 
 (def time-elapsed (atom 0))
 
@@ -35,6 +36,8 @@
   (draw-elapsed-time)
   (draw-player-lives-left)
   (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
+  (bonus-life/bonus-life-update)
+  (bonus-life/bonus-lifes-draw)
   (top-screen/top-enemies-update)
   (top-screen/top-enemies-draw)
   (when (> (/ @time-elapsed 80.0) 30)
