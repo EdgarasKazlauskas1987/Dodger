@@ -15,11 +15,6 @@
 (defn move-player-right []
   (swap! player-coordinates update-in [:x] + 10))
 
-#_
-(defn draw-player [x y]
-  (quil/fill (quil/color 255 255 255))
-  (quil/rect x y 30 30))
-
 (defn draw-player
   "Drawing player"
   [x y]
