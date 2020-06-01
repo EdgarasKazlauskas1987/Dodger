@@ -56,6 +56,7 @@
 (quil/defsketch pong
                 :title "Dodge"
                 :size [900 650]
-                :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80))
+                :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
+                         (quil/set-state! :star (quil/load-image "resources/star.png")))
                 :draw (fn [] (draw) (count-time-elapsed))
                 :key-pressed player/key-pressed)

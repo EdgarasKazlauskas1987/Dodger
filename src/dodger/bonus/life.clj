@@ -41,10 +41,10 @@
         (player/inc-player-lives)))))
 
 (defn draw-bonus-life
-  "Drawing a bonus life object"
+  "Drawing bonus life object"
   [x y]
-  (quil/fill (quil/color 245 245 245))
-  (quil/rect x y 30 30))
+  (let [star (quil/state :star)]
+    (when (quil/loaded? star) (quil/image star x y))))
 
 (defn bonus-lifes-draw
   "Drawing all bonus life objects in the list"
