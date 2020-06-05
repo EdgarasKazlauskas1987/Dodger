@@ -53,7 +53,7 @@
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw))))
 
-(quil/defsketch pong
+(quil/defsketch dodger
                 :title "Dodger"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)

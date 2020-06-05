@@ -1,19 +1,40 @@
 (ns dodger.player
   (:require [quil.core :as quil]))
 
+;;Checking if player object is withing the screen borders
+(defn within-max-x-border?
+  [player-x]
+  (if (<= player-x 850) true false))
+
+(defn within-min-x-border?
+  [player-x]
+  (if (>= player-x 10) true false))
+
+(defn within-max-y-border?
+  [player-y]
+  (if (<= player-y 600) true false))
+
+(defn within-min-y-border?
+  [player-y]
+  (if (>= player-y 10) true false))
+
 (def player-coordinates (atom {:x 410 :y 230}))
 
 (defn move-player-up []
-  (swap! player-coordinates update-in [:y] - 10))
+  (when (within-min-y-border? (get @player-coordinates :y))
+    (swap! player-coordinates update-in [:y] - 10)))
 
 (defn move-player-down []
-  (swap! player-coordinates update-in [:y] + 10))
+  (when (within-max-y-border? (get @player-coordinates :y))
+    (swap! player-coordinates update-in [:y] + 10)))
 
 (defn move-player-left []
-  (swap! player-coordinates update-in [:x] - 10))
+  (when (within-min-x-border? (get @player-coordinates :x))
+    (swap! player-coordinates update-in [:x] - 10)))
 
 (defn move-player-right []
-  (swap! player-coordinates update-in [:x] + 10))
+  (when (within-max-x-border? (get @player-coordinates :x))
+    (swap! player-coordinates update-in [:x] + 10)))
 
 (defn draw-player
   "Drawing player"
