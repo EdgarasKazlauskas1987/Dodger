@@ -40,7 +40,7 @@
   (bonus-life/bonus-lifes-draw)
   (top-screen/top-enemies-update)
   (top-screen/top-enemies-draw)
-  (when (> (/ @time-elapsed 80.0) 30)
+  (when (> (/ @time-elapsed 80.0) 1)
     (do
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw)))
@@ -59,6 +59,10 @@
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
                          (quil/set-state!
                            :star (quil/load-image "resources/star.png")
-                           :ghost (quil/load-image "resources/ghost40.png")))
+                           :ghost (quil/load-image "resources/ghost40.png")
+                           :enemy-bottom-35 (quil/load-image "resources/monster1-35.png")
+                           :enemy-bottom-40 (quil/load-image "resources/monster1-40.png")
+                           :enemy-bottom-50 (quil/load-image "resources/monster1-50.png")
+                           :enemy-bottom-60 (quil/load-image "resources/monster1-60.png")))
                 :draw (fn [] (draw) (count-time-elapsed))
                 :key-pressed player/key-pressed)

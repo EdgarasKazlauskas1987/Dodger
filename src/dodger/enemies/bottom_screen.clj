@@ -12,7 +12,8 @@
   (let [size (utils/generate-size)]
     (atom
       (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size
+        :height size :speed (utils/generate-speed)))))
 
 (def enemy2
   (let [size (utils/generate-size)]
@@ -33,9 +34,9 @@
         :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
 
 (def bottom-enemies (seq [enemy1
-                           enemy2
-                           enemy3
-                           enemy4]))
+                          enemy2
+                          enemy3
+                          enemy4]))
 
 (defn outside?
   "Checking if a bottom screen enemy is outside of screen limits"
@@ -83,13 +84,20 @@
       )))
 
 (defn draw-bottom-enemy
-  "Drawing an enemy in green color"
-  [x y length width]
-  (quil/fill (quil/color 0 255 0))
-  (quil/rect x y length width))
+  "Drawing bonus life object"
+  [x y width]
+  (let [image-size (case width
+               35 :enemy-bottom-35
+               40 :enemy-bottom-40
+               50 :enemy-bottom-50
+               60 :enemy-bottom-60)
+        enemy-bottom (quil/state image-size)]
+    (when (quil/loaded? enemy-bottom)
+      (quil/image enemy-bottom x y)
+      )))
 
 (defn bottom-enemies-draw
   "Drawing all bottom screen enemies in the list"
   []
   (doseq [enemy bottom-enemies]
-    (draw-bottom-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
+    (draw-bottom-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
