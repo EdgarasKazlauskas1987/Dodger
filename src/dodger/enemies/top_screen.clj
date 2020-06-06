@@ -83,15 +83,19 @@
       )))
 
 (defn draw-top-enemy
-  "Drawing an enemy in yellow color"
-  [x y length width]
-  (quil/fill (quil/color 255 255 0))
-  (quil/rect x y length width))
+  "Drawing top enemy object"
+  [x y width]
+  (let [image-size (case width
+                     35 :enemy-top-35
+                     40 :enemy-top-40
+                     50 :enemy-top-50
+                     60 :enemy-top-60)
+        enemy-top (quil/state image-size)]
+    (when (quil/loaded? enemy-top)
+      (quil/image enemy-top x y))))
 
 (defn top-enemies-draw
   "Drawing all top screen enemies in the list"
   []
   (doseq [enemy top-enemies]
-    (draw-top-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
-
-
+    (draw-top-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))

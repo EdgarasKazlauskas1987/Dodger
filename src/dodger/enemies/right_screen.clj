@@ -79,17 +79,22 @@
           (do
             (player/dec-player-lives)
             (set-to-start-position enemy))
-          (swap! enemy update-in [:x] - (get @enemy :speed))))
-      )))
+          (swap! enemy update-in [:x] - (get @enemy :speed)))))))
 
 (defn draw-right-enemy
-  "Drawing an enemy in x color"
-  [x y length width]
-  (quil/fill (quil/color 255 0 255))
-  (quil/rect x y length width))
+  "Drawing right enemy object"
+  [x y width]
+  (let [image-size (case width
+                     35 :enemy-right-35
+                     40 :enemy-right-40
+                     50 :enemy-right-50
+                     60 :enemy-right-60)
+        enemy-right (quil/state image-size)]
+    (when (quil/loaded? enemy-right)
+      (quil/image enemy-right x y))))
 
 (defn right-enemies-draw
   "Drawing all right screen enemies in the list"
   []
   (doseq [enemy right-enemies]
-    (draw-right-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
+    (draw-right-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))

@@ -12,8 +12,7 @@
   (let [size (utils/generate-size)]
     (atom
       (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size
-        :height size :speed (utils/generate-speed)))))
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
 
 (def enemy2
   (let [size (utils/generate-size)]
@@ -84,7 +83,7 @@
       )))
 
 (defn draw-bottom-enemy
-  "Drawing bonus life object"
+  "Drawing bottom enemy object"
   [x y width]
   (let [image-size (case width
                35 :enemy-bottom-35
@@ -93,8 +92,7 @@
                60 :enemy-bottom-60)
         enemy-bottom (quil/state image-size)]
     (when (quil/loaded? enemy-bottom)
-      (quil/image enemy-bottom x y)
-      )))
+      (quil/image enemy-bottom x y))))
 
 (defn bottom-enemies-draw
   "Drawing all bottom screen enemies in the list"

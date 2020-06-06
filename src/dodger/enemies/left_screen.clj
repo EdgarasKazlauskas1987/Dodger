@@ -79,17 +79,22 @@
           (do
             (player/dec-player-lives)
             (set-to-start-position enemy))
-          (swap! enemy update-in [:x] + (get @enemy :speed))))
-      )))
+          (swap! enemy update-in [:x] + (get @enemy :speed)))))))
 
 (defn draw-left-enemy
-  "Drawing an enemy in x color"
-  [x y length width]
-  (quil/fill (quil/color 0 255 255))
-  (quil/rect x y length width))
+  "Drawing left enemy object"
+  [x y width]
+  (let [image-size (case width
+                     35 :enemy-left-35
+                     40 :enemy-left-40
+                     50 :enemy-left-50
+                     60 :enemy-left-60)
+        enemy-left (quil/state image-size)]
+    (when (quil/loaded? enemy-left)
+      (quil/image enemy-left x y))))
 
 (defn left-enemies-draw
   "Drawing all left screen enemies in the list"
   []
   (doseq [enemy left-enemies]
-    (draw-left-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width) (get @enemy :height))))
+    (draw-left-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
