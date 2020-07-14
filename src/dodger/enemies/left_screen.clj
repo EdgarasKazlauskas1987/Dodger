@@ -80,12 +80,9 @@
   (doseq [enemy left-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (do
-        (if (collision? enemy)
-          (do
-            (player/dec-player-lives)
-            (set-to-start-position enemy))
-          (swap! enemy update-in [:x] + (get @enemy :speed)))))))
+      (if (collision? enemy)
+        (do (player/dec-player-lives) (set-to-start-position enemy))
+        (swap! enemy update-in [:x] + (get @enemy :speed))))))
 
 (defn draw-left-enemy
   "Drawing left enemy object"

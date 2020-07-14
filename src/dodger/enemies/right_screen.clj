@@ -40,7 +40,7 @@
 (defn outside?
   "Checking if a right screen enemy is outside of screen limits"
   [enemy]
-  (if (< (get @enemy :x) 0)
+  (if (neg? (get @enemy :x))
     true
     false))
 
@@ -80,12 +80,9 @@
   (doseq [enemy right-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (do
-        (if (collision? enemy)
-          (do
-            (player/dec-player-lives)
-            (set-to-start-position enemy))
-          (swap! enemy update-in [:x] - (get @enemy :speed)))))))
+      (if (collision? enemy)
+        (do (player/dec-player-lives) (set-to-start-position enemy))
+        (swap! enemy update-in [:x] - (get @enemy :speed))))))
 
 (defn draw-right-enemy
   "Drawing right enemy object"

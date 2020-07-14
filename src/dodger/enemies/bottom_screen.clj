@@ -40,7 +40,7 @@
 (defn outside?
   "Checking if a bottom screen enemy is outside of screen limits"
   [enemy]
-  (if (< (get @enemy :y) 0)
+  (if (neg? (get @enemy :y))
     true
     false))
 
@@ -80,13 +80,9 @@
   (doseq [enemy bottom-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (do
-        (if (collision? enemy)
-          (do
-            (player/dec-player-lives)
-            (set-to-start-position enemy))
-          (swap! enemy update-in [:y] - (get @enemy :speed))))
-      )))
+      (if (collision? enemy)
+        (do (player/dec-player-lives) (set-to-start-position enemy))
+        (swap! enemy update-in [:y] - (get @enemy :speed))))))
 
 (defn draw-bottom-enemy
   "Drawing bottom enemy object"

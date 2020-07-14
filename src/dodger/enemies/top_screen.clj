@@ -80,13 +80,9 @@
   (doseq [enemy top-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (do
-        (if (collision? enemy)
-          (do
-            (player/dec-player-lives)
-            (set-to-start-position enemy))
-          (swap! enemy update-in [:y] + (get @enemy :speed))))
-      )))
+      (if (collision? enemy)
+        (do (player/dec-player-lives) (set-to-start-position enemy))
+        (swap! enemy update-in [:y] + (get @enemy :speed))))))
 
 (defn draw-top-enemy
   "Drawing top enemy object"

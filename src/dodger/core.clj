@@ -25,7 +25,7 @@
   "Checking player's lives left
   If player has no lives left the game is stopped"
   []
-  (when (< @player/player-lives 0)
+  (when (neg? @player/player-lives)
     (stop-game)))
 
 (defn draw-elapsed-time
@@ -77,26 +77,22 @@
   []
   (quil/background 11)
   (when (true? @game-running)
-    (do
-      (draw-elapsed-time)
-      (draw-player-lives-left)
-      (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))))
+    (draw-elapsed-time)
+    (draw-player-lives-left)
+    (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y)))
   (bonus-life/bonus-life-update)
   (bonus-life/bonus-lifes-draw)
   (top-screen/top-enemies-update)
   (top-screen/top-enemies-draw)
   (when (> (/ @time-elapsed 80.0) 1)
-    (do
-      (bottom-screen/bottom-enemies-update)
-      (bottom-screen/bottom-enemies-draw)))
+    (bottom-screen/bottom-enemies-update)
+    (bottom-screen/bottom-enemies-draw))
   (when (> (/ @time-elapsed 80.0) 3)
-    (do
-      (left-screen/left-enemies-update)
-      (left-screen/left-enemies-draw)))
+    (left-screen/left-enemies-update)
+    (left-screen/left-enemies-draw))
   (when (> (/ @time-elapsed 80.0) 4)
-    (do
-      (right-screen/right-enemies-update)
-      (right-screen/right-enemies-draw)))
+    (right-screen/right-enemies-update)
+    (right-screen/right-enemies-draw))
   (when (false? @game-running)
     (draw-game-over-screen)))
 
@@ -125,9 +121,8 @@
                            :enemy-right-60 (quil/load-image "resources/ghosts/green-ghost-60.png")))
                 :draw (fn [] (draw)
                         (when (true? @game-running)
-                          (do
-                            (count-time-elapsed)
-                            (check-lives-left))))
+                          (count-time-elapsed)
+                          (check-lives-left)))
                 :key-pressed (fn [] (player/key-pressed)
                                (when (false? @game-running)
                                  (menu-key-pressed))))
