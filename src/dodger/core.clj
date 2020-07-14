@@ -48,15 +48,18 @@
   (quil/fill 0 0 0)
   (quil/rect 250 100 400 450)
   (quil/fill 255 255 255)
-  (quil/text-size 15)
-  (quil/text "GAME OVER" 260 120 50)
-  (quil/text (str "Your score is " (str (int (Math/floor (/ @time-elapsed 80.0)))) " seconds") 260 150 50)
-  (quil/text "Do you want to play again?" 260 170 50)
-  (quil/text "Y/N" 260 190 50))
+  (quil/text-size 30)
+  (quil/text "GAME OVER" 260 180)
+  (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0)))) " seconds") 260 260)
+  (quil/text "Play again?" 260 380)
+  (quil/text "Y/N" 260 410))
 
 (defn start-new-game
-  "Starting new game"
-  []
+  "Starting new game" []
+  (top-screen/set-all-enemies-to-start-position)
+  (bottom-screen/set-all-enemies-to-start-position)
+  (left-screen/set-all-enemies-to-start-position)
+  (right-screen/set-all-enemies-to-start-position)
   (reset! game-running true)
   (reset! time-elapsed 0)
   (reset! player/player-lives 5))

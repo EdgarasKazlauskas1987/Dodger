@@ -68,6 +68,12 @@
     (swap! enemy assoc :height size)
     (swap! enemy assoc :speed (utils/generate-speed))))
 
+(defn set-all-enemies-to-start-position
+  "Setting all left enemies to starting position"
+  []
+  (doseq [enemy left-enemies]
+    (set-to-start-position enemy)))
+
 (defn left-enemies-update
   "Updating positions of all left screen enemies in the list"
   []
