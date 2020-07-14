@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [quil "3.1.0"]]
   :repl-options {:init-ns dodger.core}
-  :plugins [[lein-kibit "0.1.8"]])
+  :plugins [[lein-kibit "0.1.8"]
+            [jonase/eastwood "0.3.11"]])
