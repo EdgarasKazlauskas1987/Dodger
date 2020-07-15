@@ -48,11 +48,12 @@
   (quil/fill 0 0 0)
   (quil/rect 250 100 400 450)
   (quil/fill 255 255 255)
-  (quil/text-size 30)
-  (quil/text "GAME OVER" 260 180)
-  (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0)))) " seconds") 260 260)
-  (quil/text "Play again?" 260 380)
-  (quil/text "Y/N" 260 410))
+  (quil/text-font (quil/create-font "Tahoma Bold" 35))
+  (quil/text "GAME OVER" 338 180)
+  (quil/text-font (quil/create-font "Courier New Bold" 30))
+  (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0))))) 295 275)
+  (quil/text "Play again?" 340 395)
+  (quil/text "Y/N" 417 445))
 
 (defn start-new-game
   "Starting new game" []
