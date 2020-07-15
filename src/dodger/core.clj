@@ -135,5 +135,5 @@
                 :key-pressed (fn [] (player/key-pressed)
                                (when (= @game-status :stopped)
                                  (game-over-menu-key-panel))
-                               (when (= @game-status :starting
-                                        (start-menu-key-panel)))))
+                               (when (= @game-status :starting)
+                                 (start-menu-key-panel))))
