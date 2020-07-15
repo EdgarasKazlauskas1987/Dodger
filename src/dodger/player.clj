@@ -37,26 +37,22 @@
     (swap! player-coordinates update-in [:x] + 10)))
 
 (defn draw-player
-  "Drawing player"
-  [x y]
+  "Drawing player" [x y]
   (let [ghost (quil/state :ghost)]
     (when (quil/loaded? ghost) (quil/image ghost x y))))
 
 (def player-lives (atom 5))
 
 (defn inc-player-lives
-  "Incrementing amount of player lives left"
-  []
+  "Incrementing amount of player lives left" []
   (swap! player-lives inc))
 
 (defn dec-player-lives
-  "Decrementing amount of player lives left"
-  []
+  "Decrementing amount of player lives left" []
   (swap! player-lives dec))
 
 (defn player-movement
-  "Checking which key is pressed and calling corresponding function"
-  [key]
+  "Checking which key is pressed and calling corresponding function" [key]
   (cond
     (= key :up) (move-player-up)
     (= key :down) (move-player-down)
@@ -64,7 +60,6 @@
     (= key :right) (move-player-right)))
 
 (defn key-pressed
-  "Is activated when a key is pressed"
-  []
+  "Is activated when a key is pressed" []
   (when (quil/key-pressed?)
     (player-movement (quil/key-as-keyword))))

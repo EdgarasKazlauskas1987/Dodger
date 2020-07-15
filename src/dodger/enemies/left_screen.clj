@@ -38,15 +38,13 @@
                         enemy4]))
 
 (defn outside?
-  "Checking if a left screen enemy is outside of screen limits"
-  [enemy]
+  "Checking if a left screen enemy is outside of screen limits" [enemy]
   (if (> (get @enemy :x) 900)
     true
     false))
 
 (defn collision?
-  "Checking if player collided with an enemy"
-  [enemy]
+  "Checking if player collided with an enemy" [enemy]
   (if (and (or (and (>= (get @player/player-coordinates :x) (get @enemy :x))
                     (<= (get @player/player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
                (and (>= (+ (get @player/player-coordinates :x) 45) (get @enemy :x))
@@ -59,8 +57,7 @@
     false))
 
 (defn set-to-start-position
-  "Setting enemy to starting position"
-  [enemy]
+  "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
     (swap! enemy assoc :y (utils/generate-y-coordinate))
     (swap! enemy assoc :x 0)
@@ -69,14 +66,12 @@
     (swap! enemy assoc :speed (utils/generate-speed))))
 
 (defn set-all-enemies-to-start-position
-  "Setting all left enemies to starting position"
-  []
+  "Setting all left enemies to starting position" []
   (doseq [enemy left-enemies]
     (set-to-start-position enemy)))
 
 (defn left-enemies-update
-  "Updating positions of all left screen enemies in the list"
-  []
+  "Updating positions of all left screen enemies in the list" []
   (doseq [enemy left-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
@@ -85,8 +80,7 @@
         (swap! enemy update-in [:x] + (get @enemy :speed))))))
 
 (defn draw-left-enemy
-  "Drawing left enemy object"
-  [x y width]
+  "Drawing left enemy object" [x y width]
   (let [image-size (case width
                      35 :enemy-left-35
                      40 :enemy-left-40
@@ -97,7 +91,6 @@
       (quil/image enemy-left x y))))
 
 (defn left-enemies-draw
-  "Drawing all left screen enemies in the list"
-  []
+  "Drawing all left screen enemies in the list" []
   (doseq [enemy left-enemies]
     (draw-left-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))

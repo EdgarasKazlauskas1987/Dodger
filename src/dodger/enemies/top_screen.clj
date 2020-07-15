@@ -38,15 +38,13 @@
                         enemy4]))
 
 (defn outside?
-  "Checking if a top screen enemy is outside of screen limits"
-  [enemy]
+  "Checking if a top screen enemy is outside of screen limits" [enemy]
   (if (> (get @enemy :y) 650)
     true
     false))
 
 (defn collision?
-  "Checking if player collided with an enemy"
-  [enemy]
+  "Checking if player collided with an enemy" [enemy]
   (if (and (or (and (>= (get @player/player-coordinates :x) (get @enemy :x))
                     (<= (get @player/player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
                (and (>= (+ (get @player/player-coordinates :x) 45) (get @enemy :x))
@@ -59,8 +57,7 @@
     false))
 
 (defn set-to-start-position
-  "Setting enemy to starting position"
-  [enemy]
+  "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
     (swap! enemy assoc :y 0)
     (swap! enemy assoc :x (utils/generate-x-coordinate))
@@ -69,14 +66,12 @@
     (swap! enemy assoc :speed (utils/generate-speed))))
 
 (defn set-all-enemies-to-start-position
-  "Setting all top enemies to starting position"
-  []
+  "Setting all top enemies to starting position" []
   (doseq [enemy top-enemies]
     (set-to-start-position enemy)))
 
 (defn top-enemies-update
-  "Updating positions of all top screen enemies in the list"
-  []
+  "Updating positions of all top screen enemies in the list" []
   (doseq [enemy top-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
@@ -85,8 +80,7 @@
         (swap! enemy update-in [:y] + (get @enemy :speed))))))
 
 (defn draw-top-enemy
-  "Drawing top enemy object"
-  [x y width]
+  "Drawing top enemy object" [x y width]
   (let [image-size (case width
                      35 :enemy-top-35
                      40 :enemy-top-40
@@ -97,7 +91,6 @@
       (quil/image enemy-top x y))))
 
 (defn top-enemies-draw
-  "Drawing all top screen enemies in the list"
-  []
+  "Drawing all top screen enemies in the list" []
   (doseq [enemy top-enemies]
     (draw-top-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))

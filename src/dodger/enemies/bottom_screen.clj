@@ -38,15 +38,13 @@
                           enemy4]))
 
 (defn outside?
-  "Checking if a bottom screen enemy is outside of screen limits"
-  [enemy]
+  "Checking if a bottom screen enemy is outside of screen limits" [enemy]
   (if (neg? (get @enemy :y))
     true
     false))
 
 (defn collision?
-  "Checking if player collided with an enemy"
-  [enemy]
+  "Checking if player collided with an enemy" [enemy]
   (if (and (or (and (>= (get @player/player-coordinates :x) (get @enemy :x))
                     (<= (get @player/player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
                (and (>= (+ (get @player/player-coordinates :x) 45) (get @enemy :x))
@@ -59,8 +57,7 @@
     false))
 
 (defn set-to-start-position
-  "Setting enemy to starting position"
-  [enemy]
+  "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
     (swap! enemy assoc :y 650)
     (swap! enemy assoc :x (utils/generate-x-coordinate))
@@ -69,14 +66,12 @@
     (swap! enemy assoc :speed (utils/generate-speed))))
 
 (defn set-all-enemies-to-start-position
-  "Setting all bottom enemies to starting position"
-  []
+  "Setting all bottom enemies to starting position" []
   (doseq [enemy bottom-enemies]
     (set-to-start-position enemy)))
 
 (defn bottom-enemies-update
-  "Updating positions of all top screen enemies in the list"
-  []
+  "Updating positions of all top screen enemies in the list" []
   (doseq [enemy bottom-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
@@ -85,8 +80,7 @@
         (swap! enemy update-in [:y] - (get @enemy :speed))))))
 
 (defn draw-bottom-enemy
-  "Drawing bottom enemy object"
-  [x y width]
+  "Drawing bottom enemy object" [x y width]
   (let [image-size (case width
                35 :enemy-bottom-35
                40 :enemy-bottom-40
@@ -97,7 +91,6 @@
       (quil/image enemy-bottom x y))))
 
 (defn bottom-enemies-draw
-  "Drawing all bottom screen enemies in the list"
-  []
+  "Drawing all bottom screen enemies in the list" []
   (doseq [enemy bottom-enemies]
     (draw-bottom-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))

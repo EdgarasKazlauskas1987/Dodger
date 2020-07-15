@@ -78,19 +78,23 @@
   (reset! time-elapsed 0)
   (reset! player/player-lives 5))
 
-(defn start-menu-key-pressed
+(defn shut-down
+  "Closing the game" []
+  (System/exit 0))
+
+(defn start-menu-key-panel
   "Is activated when a player is in the start menu" []
   (when (quil/key-pressed?)
     (cond
       (= (quil/key-as-keyword) :p) (start-new-game)
-      (= (quil/key-as-keyword) :q) (System/exit 0))))
+      (= (quil/key-as-keyword) :q) (shut-down))))
 
-(defn menu-key-pressed
+(defn game-over-menu-key-panel
   "Is activated when a player is choosing to play again or close the game" []
   (when (quil/key-pressed?)
     (cond
       (= (quil/key-as-keyword) :y) (start-new-game)
-      (= (quil/key-as-keyword) :n) (System/exit 0))))
+      (= (quil/key-as-keyword) :n) (shut-down))))
 
 (defn draw
   "Drawing all elements of the game" []
@@ -150,6 +154,6 @@
                           (check-lives-left)))
                 :key-pressed (fn [] (player/key-pressed)
                                (when (= @game-status :stopped)
-                                 (menu-key-pressed))
+                                 (game-over-menu-key-panel))
                                (when (= @game-status :starting
-                                        (start-menu-key-pressed)))))
+                                        (start-menu-key-panel)))))
