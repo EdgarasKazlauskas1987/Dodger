@@ -44,15 +44,15 @@
     false))
 
 (defn collision?
-  "Checking if player collided with an enemy" [enemy]
-  (if (and (or (and (>= (get @player/player-coordinates :x) (get @enemy :x))
-                    (<= (get @player/player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
-               (and (>= (+ (get @player/player-coordinates :x) 45) (get @enemy :x))
-                    (<= (+ (get @player/player-coordinates :x) 45) (+ (get @enemy :x) (get @enemy :width)))))
-           (or (and (>= (get @player/player-coordinates :y) (get @enemy :y))
-                    (<= (get @player/player-coordinates :y) (+ (get @enemy :y) (get @enemy :width))))
-               (and (>= (+ (get @player/player-coordinates :y) 45) (get @enemy :y))
-                    (<= (+ (get @player/player-coordinates :y) 45) (+ (get @enemy :y) (get @enemy :width))))))
+  "Checking if player collided with an enemy" [player-coordinates enemy]
+  (if (and (or (and (>= (get player-coordinates :x) (get @enemy :x))
+                    (<= (get player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
+               (and (>= (+ (get player-coordinates :x) 45) (get @enemy :x))
+                    (<= (+ (get player-coordinates :x) 45) (+ (get @enemy :x) (get @enemy :width)))))
+           (or (and (>= (get player-coordinates :y) (get @enemy :y))
+                    (<= (get player-coordinates :y) (+ (get @enemy :y) (get @enemy :width))))
+               (and (>= (+ (get player-coordinates :y) 45) (get @enemy :y))
+                    (<= (+ (get player-coordinates :y) 45) (+ (get @enemy :y) (get @enemy :width))))))
     true
     false))
 
@@ -75,7 +75,7 @@
   (doseq [enemy top-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (if (collision? enemy)
+      (if (collision? @player/player-coordinates enemy)
         (do (player/dec-player-lives) (set-to-start-position enemy))
         (swap! enemy update-in [:y] + (get @enemy :speed))))))
 

@@ -14,15 +14,15 @@
   (swap! bonus-life assoc :time 0))
 
 (defn collision?
-  "Checking if player collided with a bonus life object" [bonus-life]
-  (if (and (or (and (>= (get @player/player-coordinates :x) (get @bonus-life :x))
-                    (<= (get @player/player-coordinates :x) (+ (get @bonus-life :x) 30)))
-               (and (>= (+ (get @player/player-coordinates :x) 45) (get @bonus-life :x))
-                    (<= (+ (get @player/player-coordinates :x) 45) (+ (get @bonus-life :x) 30))))
-           (or (and (>= (get @player/player-coordinates :y) (get @bonus-life :y))
-                    (<= (get @player/player-coordinates :y) (+ (get @bonus-life :y) 30)))
-               (and (>= (+ (get @player/player-coordinates :y) 45) (get @bonus-life :y))
-                    (<= (+ (get @player/player-coordinates :y) 45) (+ (get @bonus-life :y) 30)))))
+  "Checking if player collided with a bonus life object" [player-coordinates bonus-life]
+  (if (and (or (and (>= (get player-coordinates :x) (get @bonus-life :x))
+                    (<= (get player-coordinates :x) (+ (get @bonus-life :x) 30)))
+               (and (>= (+ (get player-coordinates :x) 45) (get @bonus-life :x))
+                    (<= (+ (get player-coordinates :x) 45) (+ (get @bonus-life :x) 30))))
+           (or (and (>= (get player-coordinates :y) (get @bonus-life :y))
+                    (<= (get player-coordinates :y) (+ (get @bonus-life :y) 30)))
+               (and (>= (+ (get player-coordinates :y) 45) (get @bonus-life :y))
+                    (<= (+ (get player-coordinates :y) 45) (+ (get @bonus-life :y) 30)))))
     true
     false))
 
@@ -33,7 +33,7 @@
       (swap! life update-in [:time] inc)
       (when (> (/ (get @life :time) 80.0) 15)
         (set-to-new-position life))
-      (when (collision? life)
+      (when (collision? @player/player-coordinates life)
         (set-to-new-position life)
         (player/inc-player-lives)))))
 
