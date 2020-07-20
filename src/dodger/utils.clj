@@ -13,5 +13,5 @@
   (rand-int 630))
 
 (defn generate-size
-  "Generating random size" []
+  "Generating random enemy size" []
   (rand-nth [35 40 50 60]))
