@@ -1,7 +1,8 @@
 (ns dodger.enemies.right-screen
   (:require [quil.core :as quil]
+            [dodger.utils :as utils]
             [dodger.player :as player]
-            [dodger.utils :as utils]))
+            [dodger.controls :as controls]))
 
 (defstruct right-enemy :x :y :speed)
 
@@ -43,19 +44,6 @@
     true
     false))
 
-(defn collision?
-  "Checking if player collided with an enemy" [player-coordinates enemy]
-  (if (and (or (and (>= (get player-coordinates :x) (get @enemy :x))
-                    (<= (get player-coordinates :x) (+ (get @enemy :x) (get @enemy :width))))
-               (and (>= (+ (get player-coordinates :x) 45) (get @enemy :x))
-                    (<= (+ (get player-coordinates :x) 45) (+ (get @enemy :x) (get @enemy :width)))))
-           (or (and (>= (get player-coordinates :y) (get @enemy :y))
-                    (<= (get player-coordinates :y) (+ (get @enemy :y) (get @enemy :width))))
-               (and (>= (+ (get player-coordinates :y) 45) (get @enemy :y))
-                    (<= (+ (get player-coordinates :y) 45) (+ (get @enemy :y) (get @enemy :width))))))
-    true
-    false))
-
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
@@ -75,7 +63,7 @@
   (doseq [enemy right-enemies]
     (if (outside? enemy)
       (set-to-start-position enemy)
-      (if (collision? @player/player-coordinates enemy)
+      (if (controls/collision? @player/player-coordinates enemy)
         (do (player/dec-player-lives) (set-to-start-position enemy))
         (swap! enemy update-in [:x] - (get @enemy :speed))))))
 

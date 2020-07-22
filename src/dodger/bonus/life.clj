@@ -1,9 +1,11 @@
 (ns dodger.bonus.life
   (:require [quil.core :as quil]
             [dodger.utils :as utils]
-            [dodger.player :as player]))
+            [dodger.player :as player]
+            [dodger.controls :as controls]))
 
-(def bonus-life (atom {:x (utils/generate-x-coordinate) :y (utils/generate-y-coordinate) :time 0}))
+(def bonus-life (atom {:x (utils/generate-x-coordinate) :y (utils/generate-y-coordinate)
+                       :width 50 :height 50 :time 0}))
 
 (def bonus-lives (seq [bonus-life]))
 
@@ -13,19 +15,6 @@
   (swap! bonus-life assoc :y (utils/generate-y-coordinate))
   (swap! bonus-life assoc :time 0))
 
-(defn collision?
-  "Checking if player collided with a bonus life object" [player-coordinates bonus-life]
-  (if (and (or (and (>= (get player-coordinates :x) (get @bonus-life :x))
-                    (<= (get player-coordinates :x) (+ (get @bonus-life :x) 30)))
-               (and (>= (+ (get player-coordinates :x) 45) (get @bonus-life :x))
-                    (<= (+ (get player-coordinates :x) 45) (+ (get @bonus-life :x) 30))))
-           (or (and (>= (get player-coordinates :y) (get @bonus-life :y))
-                    (<= (get player-coordinates :y) (+ (get @bonus-life :y) 30)))
-               (and (>= (+ (get player-coordinates :y) 45) (get @bonus-life :y))
-                    (<= (+ (get player-coordinates :y) 45) (+ (get @bonus-life :y) 30)))))
-    true
-    false))
-
 (defn bonus-life-update
   "Updating bonus life objects" []
   (doseq [life bonus-lives]
@@ -33,7 +22,7 @@
       (swap! life update-in [:time] inc)
       (when (> (/ (get @life :time) 80.0) 15)
         (set-to-new-position life))
-      (when (collision? @player/player-coordinates life)
+      (when (controls/collision? @player/player-coordinates life)
         (set-to-new-position life)
         (player/inc-player-lives)))))
 
