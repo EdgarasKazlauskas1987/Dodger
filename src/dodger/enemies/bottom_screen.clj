@@ -38,12 +38,6 @@
                           enemy3
                           enemy4]))
 
-(defn outside?
-  "Checking if a bottom screen enemy is outside of screen limits" [enemy]
-  (if (neg? (get @enemy :y))
-    true
-    false))
-
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
@@ -61,7 +55,7 @@
 (defn bottom-enemies-update
   "Updating positions of all top screen enemies in the list" []
   (doseq [enemy bottom-enemies]
-    (if (outside? enemy)
+    (if (controls/outside? enemy)
       (set-to-start-position enemy)
       (if (controls/collision? @player/player-coordinates enemy)
         (do (player/dec-player-lives) (set-to-start-position enemy))
