@@ -23,5 +23,5 @@ In order to run the project a small amount of prerequisites and additional steps
 ### Prerequisites
 
 + Intellij IDE (or any other supporting Clojure) installed
-+ Cursive pluging installed (for Intellij IDE)
++ Cursive plugin installed (for Intellij IDE)
 
