@@ -33,10 +33,17 @@
       (struct-map bottom-enemy
         :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
 
+(def enemy5
+  (let [size (utils/generate-size)]
+    (atom
+      (struct-map bottom-enemy
+        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+
 (def bottom-enemies (seq [enemy1
                           enemy2
                           enemy3
-                          enemy4]))
+                          enemy4
+                          enemy5]))
 
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]

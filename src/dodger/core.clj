@@ -7,7 +7,8 @@
             [dodger.enemies.left-screen :as left-screen]
             [dodger.enemies.right-screen :as right-screen]
             [dodger.bonus.life :as bonus-life]
-            [dodger.graphics :as graphics]))
+            [dodger.graphics :as graphics]
+            [dodger.settings :as settings]))
 
 (def time-elapsed (atom 0))
 (def game-status (atom :starting))
@@ -77,7 +78,7 @@
   (right-screen/set-all-enemies-to-start-position)
   (reset! game-status :running)
   (reset! time-elapsed 0)
-  (reset! player/player-lives 5))
+  (reset! player/player-lives settings/starting-lives))
 
 (defn shut-down
   "Closing the game" []
@@ -111,13 +112,13 @@
     (bonus-life/bonus-lifes-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
-    (when (> (/ @time-elapsed 80.0) 1)
+    (when (> (/ @time-elapsed 80.0) settings/start-top-enemies-time)
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) 3)
+    (when (> (/ @time-elapsed 80.0) settings/start-left-enemies-time)
       (left-screen/left-enemies-update)
       (left-screen/left-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) 4)
+    (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw)))
   (when (= @game-status :stopped)

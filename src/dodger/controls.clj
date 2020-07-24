@@ -6,7 +6,7 @@
                                     30 45)
         object (java.awt.Rectangle. (get @object-bounds :x) (get @object-bounds :y)
                                     (get @object-bounds :width) (get @object-bounds :height))]
-    (. player intersects object)))
+    (.intersects player object)))
 
 (defn outside?
   "Checking if an enemy is outside of the screen limits" [enemy]
