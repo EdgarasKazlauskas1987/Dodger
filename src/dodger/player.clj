@@ -21,21 +21,23 @@
 
 (def player-coordinates (atom {:x 410 :y 230}))
 
+(def active-keys (atom #{}))
+
 (defn move-player-up []
   (when (within-min-y-border? (get @player-coordinates :y))
-    (swap! player-coordinates update-in [:y] - 10)))
+    (swap! player-coordinates update-in [:y] - 2)))
 
 (defn move-player-down []
   (when (within-max-y-border? (get @player-coordinates :y))
-    (swap! player-coordinates update-in [:y] + 10)))
+    (swap! player-coordinates update-in [:y] + 2)))
 
 (defn move-player-left []
   (when (within-min-x-border? (get @player-coordinates :x))
-    (swap! player-coordinates update-in [:x] - 10)))
+    (swap! player-coordinates update-in [:x] - 2)))
 
 (defn move-player-right []
   (when (within-max-x-border? (get @player-coordinates :x))
-    (swap! player-coordinates update-in [:x] + 10)))
+    (swap! player-coordinates update-in [:x] + 2)))
 
 (defn draw-player
   "Drawing player" [x y]
@@ -52,15 +54,17 @@
   "Decrementing amount of player lives left" []
   (swap! player-lives dec))
 
-(defn player-movement
-  "Checking which key is pressed and calling corresponding function" [key]
-  (cond
-    (= key :up) (move-player-up)
-    (= key :down) (move-player-down)
-    (= key :left) (move-player-left)
-    (= key :right) (move-player-right)))
-
 (defn key-pressed
-  "Is activated when a key is pressed" []
-  (when (quil/key-pressed?)
-    (player-movement (quil/key-as-keyword))))
+  "Activated when a key is pressed" []
+  (swap! active-keys conj (quil/key-as-keyword)))
+
+(defn key-released
+  "Activated when a key is released" []
+  (swap! active-keys disj (quil/key-as-keyword)))
+
+(defn player-movement
+  "Checking which keys are active and calling corresponding function" []
+  (when (contains? @active-keys :up) (move-player-up))
+  (when (contains? @active-keys :down) (move-player-down))
+  (when (contains? @active-keys :left) (move-player-left))
+  (when (contains? @active-keys :right) (move-player-right)))

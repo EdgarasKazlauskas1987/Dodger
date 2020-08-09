@@ -129,7 +129,7 @@
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
                          (graphics/load-images))
-                :draw (fn [] (draw)
+                :draw (fn [] (draw) (player/player-movement)
                         (when (= @game-status :running)
                           (count-time-elapsed)
                           (check-lives-left)))
@@ -137,4 +137,5 @@
                                (when (= @game-status :stopped)
                                  (game-over-menu-key-panel))
                                (when (= @game-status :starting)
-                                 (start-menu-key-panel))))
+                                 (start-menu-key-panel)))
+                :key-released (fn [] (player/key-released)))
