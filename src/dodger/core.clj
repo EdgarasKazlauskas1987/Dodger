@@ -8,7 +8,8 @@
             [dodger.enemies.right-screen :as right-screen]
             [dodger.bonus.life :as bonus-life]
             [dodger.graphics :as graphics]
-            [dodger.settings :as settings]))
+            [dodger.settings :as settings]
+            [dodger.utils :as utils]))
 
 (def time-elapsed (atom 0))
 (def game-status (atom :starting))
@@ -128,7 +129,7 @@
                 :title "Dodger"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
-                         (graphics/load-images))
+                         (graphics/load-images) (utils/prepare-file))
                 :draw (fn [] (draw) (player/player-movement)
                         (when (= @game-status :running)
                           (count-time-elapsed)
