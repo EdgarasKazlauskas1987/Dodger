@@ -24,8 +24,8 @@
   (.exists (io/as-file high-score-file)))
 
 (defn create-file
-  "Creating high score file" []
-  (spit high-score-file ""))
+  "Creating high score file with starting value" []
+  (spit high-score-file "0"))
 
 (defn prepare-file
   "Preparing high score file" []
@@ -34,9 +34,16 @@
 
 (defn read-from-file
   "Reading content from high score file" []
+  (prepare-file)
   (slurp high-score-file))
 
 (defn write-to-file
-  "Writting new high score to file" [score]
+  "Writing new high score to file" [score]
   (spit high-score-file score))
+
+(defn new-record?
+  "Checking if its a new record" [current-result current-record]
+  (if (> current-result current-record)
+    true
+    false))
 

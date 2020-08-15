@@ -14,3 +14,4 @@ pom.xml.asc
 .idea/workspace.xml
 replay_pid16640.log
 hs_err_pid16640.log
+/resources/high_score.txt

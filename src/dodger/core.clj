@@ -13,6 +13,11 @@
 
 (def time-elapsed (atom 0))
 (def game-status (atom :starting))
+(def current-record (atom (read-string (utils/read-from-file))))
+
+(defn read-current-record
+  "Reading current record" []
+  (reset! current-record (read-string (utils/read-from-file))))
 
 (defn count-time-elapsed
   "Counting time elapsed by inc after every frame" []
@@ -20,6 +25,9 @@
 
 (defn stop-game
   "Stopping the game when player lost all lives" []
+  (let [current-result (int (Math/floor (/ @time-elapsed 80.0)))]
+    (when (utils/new-record? current-result (int @current-record))
+      (utils/write-to-file current-result)))
   (reset! game-status :stopped))
 
 (defn check-lives-left
@@ -61,15 +69,19 @@
 
 (defn draw-game-over-screen
   "Drawing screen when game is over" []
-  (quil/fill 0 0 0)
-  (quil/rect 250 100 400 450)
-  (quil/fill 255 255 255)
-  (quil/text-font (quil/create-font "Tahoma Bold" 35))
-  (quil/text "GAME OVER" 338 180)
-  (quil/text-font (quil/create-font "Courier New Bold" 30))
-  (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0))))) 295 275)
-  (quil/text "Play again?" 340 395)
-  (quil/text "Y/N" 417 445))
+  (let [result (int (Math/floor (/ @time-elapsed 80.0)))]
+    (quil/fill 0 0 0)
+    (quil/rect 250 100 400 450)
+    (quil/fill 255 255 255)
+    (quil/text-font (quil/create-font "Tahoma Bold" 35))
+    (quil/text "GAME OVER" 338 180)
+    (quil/text-font (quil/create-font "Courier New Bold" 30))
+    (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0))))) 295 275)
+    (when (utils/new-record? result (int @current-record))
+      (quil/text "NEW RECORD!" 345 330))
+    (quil/text "Play again?" 340 395)
+    (quil/text "Y/N" 417 445))
+)
 
 (defn start-new-game
   "Starting new game" []
@@ -77,6 +89,7 @@
   (bottom-screen/set-all-enemies-to-start-position)
   (left-screen/set-all-enemies-to-start-position)
   (right-screen/set-all-enemies-to-start-position)
+  (read-current-record)
   (reset! game-status :running)
   (reset! time-elapsed 0)
   (reset! player/player-lives settings/starting-lives))
