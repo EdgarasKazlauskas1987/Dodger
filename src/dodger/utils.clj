@@ -19,6 +19,12 @@
   "Generating random enemy size" []
   (rand-nth [35 40 50 60]))
 
+(defn addLife?
+  "Decides if player gets a life after taking a star" []
+  (if (= (rand-int 10) 0)
+    true
+    false))
+
 (defn file-exist?
   "Checking if high score file exists" []
   (.exists (io/as-file high-score-file)))

@@ -6,7 +6,7 @@
             [dodger.enemies.bottom-screen :as bottom-screen]
             [dodger.enemies.left-screen :as left-screen]
             [dodger.enemies.right-screen :as right-screen]
-            [dodger.bonus.life :as bonus-life]
+            [dodger.star :as star]
             [dodger.graphics :as graphics]
             [dodger.settings :as settings]
             [dodger.utils :as utils]))
@@ -122,8 +122,8 @@
     (draw-player-lives-left)
     (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y)))
   (when (not= @game-status :starting)
-    (bonus-life/bonus-life-update)
-    (bonus-life/bonus-lifes-draw)
+    (star/star-update)
+    (star/stars-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
     (when (> (/ @time-elapsed 80.0) settings/start-top-enemies-time)
