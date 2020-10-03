@@ -21,10 +21,10 @@
     (do
       (swap! life update-in [:time] inc)
       (when (> (/ (get @life :time) 80.0) 15)
-        (set-to-new-position life))
-      (when (controls/collision? @player/player-coordinates life)
         (set-to-new-position life)
-        (player/inc-player-lives)))))
+        (player/dec-player-lives))
+      (when (controls/collision? @player/player-coordinates life)
+        (set-to-new-position life)))))
 
 (defn draw-bonus-life
   "Drawing bonus life object" [x y]
