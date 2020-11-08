@@ -21,7 +21,7 @@
 
 (defn addLife?
   "Decides if player gets a life after taking a star" []
-  (if (= (rand-int 10) 0)
+  (if (zero? (rand-int 10))
     true
     false))
 
