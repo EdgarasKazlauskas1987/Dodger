@@ -67,6 +67,18 @@
     (when (quil/loaded? player-img-3)
       (quil/image player-img-3 60 162))))
 
+(defn draw-pause-screen
+  "Drawing screen when game is paused" []
+  (quil/fill 0 0 0)
+  (quil/rect 250 100 400 350)
+  (quil/fill 255 255 255)
+  (quil/text-font (quil/create-font "Tahoma Bold" 35))
+  (quil/text "PAUSED" 360 180)
+  (quil/text-font (quil/create-font "Courier New Bold" 30))
+  (quil/text "Continue C" 360 250)
+  (quil/text "Restart R" 360 320)
+  (quil/text "Quit Q" 360 390))
+
 (defn draw-game-over-screen
   "Drawing screen when game is over" []
   (let [result (int (Math/floor (/ @time-elapsed 80.0)))]
@@ -94,6 +106,12 @@
   (reset! time-elapsed 0)
   (reset! player/player-lives settings/starting-lives))
 
+(defn pause-game
+  "Pausing game" []
+  (when (quil/key-pressed?)
+    (when (= (quil/key-as-keyword) :space)
+      (reset! game-status :paused))))
+
 (defn shut-down
   "Closing the game" []
   (System/exit 0))
@@ -103,6 +121,14 @@
   (when (quil/key-pressed?)
     (cond
       (= (quil/key-as-keyword) :p) (start-new-game)
+      (= (quil/key-as-keyword) :q) (shut-down))))
+
+(defn pause-menu-key-panel
+  "Is activated when a player is in the pause menu" []
+  (when (quil/key-pressed?)
+    (cond
+      (= (quil/key-as-keyword) :c) (reset! game-status :running)
+      (= (quil/key-as-keyword) :r) (start-new-game)
       (= (quil/key-as-keyword) :q) (shut-down))))
 
 (defn game-over-menu-key-panel
@@ -118,10 +144,12 @@
   (when (= @game-status :starting)
     (draw-start-menu-screen))
   (when (= @game-status :running)
+    (count-time-elapsed)
     (draw-elapsed-time)
+    (check-lives-left)
     (draw-player-lives-left)
     (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y)))
-  (when (not= @game-status :starting)
+  (when (and (not= @game-status :starting) (not= @game-status :paused))
     (star/star-update)
     (star/stars-draw)
     (top-screen/top-enemies-update)
@@ -136,20 +164,29 @@
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw)))
   (when (= @game-status :stopped)
-    (draw-game-over-screen)))
+    (draw-game-over-screen))
+  (when (= @game-status :paused)
+    (top-screen/top-enemies-draw)
+    (bottom-screen/bottom-enemies-draw)
+    (left-screen/left-enemies-draw)
+    (right-screen/right-enemies-draw)
+    (draw-pause-screen)))
 
 (quil/defsketch dodger
                 :title "Dodger"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
                          (graphics/load-images) (utils/prepare-file))
-                :draw (fn [] (draw) (player/player-movement)
-                        (when (= @game-status :running)
-                          (count-time-elapsed)
-                          (check-lives-left)))
+                :draw (fn []
+                        (draw)
+                        (player/player-movement))
                 :key-pressed (fn [] (player/key-pressed)
-                               (when (= @game-status :stopped)
-                                 (game-over-menu-key-panel))
                                (when (= @game-status :starting)
-                                 (start-menu-key-panel)))
+                                 (start-menu-key-panel))
+                               (when (= @game-status :running)
+                                 (pause-game))
+                               (when (= @game-status :paused)
+                                 (pause-menu-key-panel))
+                               (when (= @game-status :stopped)
+                                 (game-over-menu-key-panel)))
                 :key-released (fn [] (player/key-released)))
