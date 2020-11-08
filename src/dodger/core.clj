@@ -138,18 +138,18 @@
       (= (quil/key-as-keyword) :y) (start-new-game)
       (= (quil/key-as-keyword) :n) (shut-down))))
 
-(defn draw
-  "Drawing all elements of the game" []
-  (quil/background 11)
-  (when (= @game-status :starting)
-    (draw-start-menu-screen))
-  (when (= @game-status :running)
+(defn starting-status-flow
+  "Steps taken when game is in starting mode" []
+  (draw-start-menu-screen))
+
+(defn running-status-flow
+  "Steps taken when game is in running mode" []
+  (do
     (count-time-elapsed)
     (draw-elapsed-time)
     (check-lives-left)
     (draw-player-lives-left)
-    (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y)))
-  (when (and (not= @game-status :starting) (not= @game-status :paused))
+    (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
     (star/star-update)
     (star/stars-draw)
     (top-screen/top-enemies-update)
@@ -162,15 +162,43 @@
       (left-screen/left-enemies-draw))
     (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
       (right-screen/right-enemies-update)
-      (right-screen/right-enemies-draw)))
-  (when (= @game-status :stopped)
-    (draw-game-over-screen))
-  (when (= @game-status :paused)
+      (right-screen/right-enemies-draw))))
+
+(defn paused-status-flow
+  "Steps taken when game is in paused mode" []
+  (do
     (top-screen/top-enemies-draw)
     (bottom-screen/bottom-enemies-draw)
     (left-screen/left-enemies-draw)
     (right-screen/right-enemies-draw)
     (draw-pause-screen)))
+
+  (defn stopped-status-flow
+    "Steps taken when game is in stopped mode" []
+    (do
+      (star/star-update)
+      (star/stars-draw)
+      (top-screen/top-enemies-update)
+      (top-screen/top-enemies-draw)
+      (when (> (/ @time-elapsed 80.0) settings/start-top-enemies-time)
+        (bottom-screen/bottom-enemies-update)
+        (bottom-screen/bottom-enemies-draw))
+      (when (> (/ @time-elapsed 80.0) settings/start-left-enemies-time)
+        (left-screen/left-enemies-update)
+        (left-screen/left-enemies-draw))
+      (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
+        (right-screen/right-enemies-update)
+        (right-screen/right-enemies-draw))
+      (draw-game-over-screen)))
+
+(defn draw
+  "Drawing all elements of the game" []
+  (quil/background 11)
+  (cond
+    (= @game-status :starting) (starting-status-flow)
+    (= @game-status :running) (running-status-flow)
+    (= @game-status :stopped) (stopped-status-flow)
+    (= @game-status :paused) (paused-status-flow)))
 
 (quil/defsketch dodger
                 :title "Dodger"
@@ -178,15 +206,11 @@
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
                          (graphics/load-images) (utils/prepare-file))
                 :draw (fn []
-                        (draw)
-                        (player/player-movement))
+                        (draw) (player/player-movement))
                 :key-pressed (fn [] (player/key-pressed)
-                               (when (= @game-status :starting)
-                                 (start-menu-key-panel))
-                               (when (= @game-status :running)
-                                 (pause-game))
-                               (when (= @game-status :paused)
-                                 (pause-menu-key-panel))
-                               (when (= @game-status :stopped)
-                                 (game-over-menu-key-panel)))
+                               (cond
+                                 (= @game-status :starting) (start-menu-key-panel)
+                                 (= @game-status :running) (pause-game)
+                                 (= @game-status :paused) (pause-menu-key-panel)
+                                 (= @game-status :stopped) (game-over-menu-key-panel)))
                 :key-released (fn [] (player/key-released)))
