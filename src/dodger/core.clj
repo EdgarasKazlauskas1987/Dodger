@@ -36,65 +36,6 @@
   (when (neg? @player/player-lives)
     (stop-game)))
 
-(defn draw-elapsed-time
-  "Drawing elapsed time in seconds" []
-  (quil/fill (quil/color 255 255 255))
-  (quil/text-size 20)
-  (quil/text (str "TIME: " (str (int (Math/floor (/ @time-elapsed 80.0))))) 10 30 40))
-
-(defn draw-player-lives-left
-  "Drawing amount of player lives left" []
-  (quil/fill (quil/color 255 255 255))
-  (quil/text-size 20)
-  (quil/text (str "LIVES: " (str @player/player-lives)) 10 65 60))
-
-(defn draw-start-menu-screen
-  "Drawing start screen" []
-  (quil/background 0 0 0)
-  (quil/fill 255 255 255)
-  (quil/text-font (quil/create-font "Tahoma Bold" 70))
-  (quil/text "DODGER" 300 180)
-  (quil/text-font (quil/create-font "Courier New Bold" 50))
-  (quil/text "Play P" 360 300)
-  (quil/text "Quit Q" 360 370)
-  (let [enemy-img-1 (quil/state :enemy-right-160)
-        enemy-img-2 (quil/state :enemy-bottom-160)
-        player-img-3 (quil/state :ghost-140)]
-    (when (quil/loaded? enemy-img-1)
-      (quil/image enemy-img-1 742 170))
-    (when (quil/loaded? enemy-img-2)
-      (quil/image enemy-img-2 280 497))
-    (when (quil/loaded? player-img-3)
-      (quil/image player-img-3 60 162))))
-
-(defn draw-pause-screen
-  "Drawing screen when game is paused" []
-  (quil/fill 0 0 0)
-  (quil/rect 250 100 400 350)
-  (quil/fill 255 255 255)
-  (quil/text-font (quil/create-font "Tahoma Bold" 35))
-  (quil/text "PAUSED" 360 180)
-  (quil/text-font (quil/create-font "Courier New Bold" 30))
-  (quil/text "Continue C" 360 250)
-  (quil/text "Restart R" 360 320)
-  (quil/text "Quit Q" 360 390))
-
-(defn draw-game-over-screen
-  "Drawing screen when game is over" []
-  (let [result (int (Math/floor (/ @time-elapsed 80.0)))]
-    (quil/fill 0 0 0)
-    (quil/rect 250 100 400 450)
-    (quil/fill 255 255 255)
-    (quil/text-font (quil/create-font "Tahoma Bold" 35))
-    (quil/text "GAME OVER" 338 180)
-    (quil/text-font (quil/create-font "Courier New Bold" 30))
-    (quil/text (str "Your result is " (str (int (Math/floor (/ @time-elapsed 80.0))))) 295 275)
-    (when (utils/new-record? result (int @current-record))
-      (quil/text "NEW RECORD!" 345 330))
-    (quil/text "Play again?" 340 395)
-    (quil/text "Y/N" 417 445))
-)
-
 (defn start-new-game
   "Starting new game" []
   (player/set-to-central-positiion)
@@ -141,15 +82,15 @@
 
 (defn starting-status-flow
   "Steps taken when game is in starting mode" []
-  (draw-start-menu-screen))
+  (graphics/draw-start-menu-screen))
 
 (defn running-status-flow
   "Steps taken when game is in running mode" []
   (do
     (count-time-elapsed)
-    (draw-elapsed-time)
+    (graphics/draw-elapsed-time @time-elapsed)
     (check-lives-left)
-    (draw-player-lives-left)
+    (graphics/draw-player-lives-left @player/player-lives)
     (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
     (star/star-update)
     (star/stars-draw)
@@ -172,7 +113,7 @@
     (bottom-screen/bottom-enemies-draw)
     (left-screen/left-enemies-draw)
     (right-screen/right-enemies-draw)
-    (draw-pause-screen)))
+    (graphics/draw-pause-screen)))
 
   (defn stopped-status-flow
     "Steps taken when game is in stopped mode" []
@@ -190,7 +131,7 @@
       (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
         (right-screen/right-enemies-update)
         (right-screen/right-enemies-draw))
-      (draw-game-over-screen)))
+      (graphics/draw-game-over-screen @time-elapsed @current-record)))
 
 (defn draw
   "Drawing all elements of the game" []
