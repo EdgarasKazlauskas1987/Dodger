@@ -97,6 +97,7 @@
 
 (defn start-new-game
   "Starting new game" []
+  (player/set-to-central-positiion)
   (top-screen/set-all-enemies-to-start-position)
   (bottom-screen/set-all-enemies-to-start-position)
   (left-screen/set-all-enemies-to-start-position)

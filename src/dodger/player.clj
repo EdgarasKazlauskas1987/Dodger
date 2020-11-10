@@ -19,9 +19,13 @@
   [player-y]
   (if (>= player-y 10) true false))
 
-(def player-coordinates (atom {:x 410 :y 230}))
+(def player-coordinates (atom {:x 430 :y 300}))
 
 (def active-keys (atom #{}))
+
+(defn set-to-central-positiion []
+  (swap! player-coordinates assoc :x 430)
+  (swap! player-coordinates assoc :y 300))
 
 (defn move-player-up []
   (when (within-min-y-border? (get @player-coordinates :y))
