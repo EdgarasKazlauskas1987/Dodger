@@ -9,41 +9,14 @@
 (def default-y-coordinate 650)
 
 ;; Creating initial objects of enemies
-(def enemy1
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+(def bottom-enemies (atom (seq '())))
 
-(def enemy2
+(defn generate-bottom-enemies []
   (let [size (utils/generate-size)]
-    (atom
-      (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy3
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy4
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy5
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map bottom-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def bottom-enemies (seq [enemy1
-                          enemy2
-                          enemy3
-                          enemy4
-                          enemy5]))
+    (while (< (count @bottom-enemies) 5)
+      (swap! bottom-enemies conj (atom
+                                 (struct-map bottom-enemy
+                                   :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))))
 
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
@@ -56,12 +29,12 @@
 
 (defn set-all-enemies-to-start-position
   "Setting all bottom enemies to starting position" []
-  (doseq [enemy bottom-enemies]
+  (doseq [enemy @bottom-enemies]
     (set-to-start-position enemy)))
 
 (defn bottom-enemies-update
   "Updating positions of all top screen enemies in the list" []
-  (doseq [enemy bottom-enemies]
+  (doseq [enemy @bottom-enemies]
     (if (controls/outside? enemy)
       (set-to-start-position enemy)
       (if (controls/collision? @player/player-coordinates enemy)
@@ -77,5 +50,5 @@
 
 (defn bottom-enemies-draw
   "Drawing all bottom screen enemies in the list" []
-  (doseq [enemy bottom-enemies]
+  (doseq [enemy @bottom-enemies]
     (draw-bottom-enemy @enemy)))

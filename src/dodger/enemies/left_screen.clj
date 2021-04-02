@@ -9,41 +9,14 @@
 (def default-x-coordinate 0)
 
 ;; Creating initial objects of enemies
-(def enemy1
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map left-enemy
-        :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))
+(def left-enemies (atom (seq '())))
 
-(def enemy2
+(defn generate-left-enemies []
   (let [size (utils/generate-size)]
-    (atom
-      (struct-map left-enemy
-        :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy3
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map left-enemy
-        :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy4
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map left-enemy
-        :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy5
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map left-enemy
-        :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))
-
-(def left-enemies (seq [enemy1
-                        enemy2
-                        enemy3
-                        enemy4
-                        enemy5]))
+    (while (< (count @left-enemies) 5)
+      (swap! left-enemies conj (atom
+                                (struct-map left-enemy
+                                  :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))))
 
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
@@ -56,12 +29,12 @@
 
 (defn set-all-enemies-to-start-position
   "Setting all left enemies to starting position" []
-  (doseq [enemy left-enemies]
+  (doseq [enemy @left-enemies]
     (set-to-start-position enemy)))
 
 (defn left-enemies-update
   "Updating positions of all left screen enemies in the list" []
-  (doseq [enemy left-enemies]
+  (doseq [enemy @left-enemies]
     (if (controls/outside? enemy)
       (set-to-start-position enemy)
       (if (controls/collision? @player/player-coordinates enemy)
@@ -77,5 +50,5 @@
 
 (defn left-enemies-draw
   "Drawing all left screen enemies in the list" []
-  (doseq [enemy left-enemies]
+  (doseq [enemy @left-enemies]
     (draw-left-enemy @enemy)))

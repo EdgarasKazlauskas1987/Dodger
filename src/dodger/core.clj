@@ -38,6 +38,10 @@
 (defn start-new-game
   "Starting new game" []
   (player/set-to-central-positiion)
+  (top-screen/generate-top-enemies)
+  (right-screen/generate-right-enemies)
+  (left-screen/generate-left-enemies)
+  (bottom-screen/generate-bottom-enemies)
   (top-screen/set-all-enemies-to-start-position)
   (bottom-screen/set-all-enemies-to-start-position)
   (left-screen/set-all-enemies-to-start-position)

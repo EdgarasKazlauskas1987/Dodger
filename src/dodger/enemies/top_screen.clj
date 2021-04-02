@@ -9,41 +9,14 @@
 (def default-y-coordinate 0)
 
 ;; Creating initial objects of enemies
-(def enemy1
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map top-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
+(def top-enemies (atom (seq '())))
 
-(def enemy2
+(defn generate-top-enemies []
   (let [size (utils/generate-size)]
-    (atom
-      (struct-map top-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy3
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map top-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy4
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map top-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def enemy5
-  (let [size (utils/generate-size)]
-    (atom
-      (struct-map top-enemy
-        :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))
-
-(def top-enemies (seq [enemy1
-                       enemy2
-                       enemy3
-                       enemy4
-                       enemy5]))
+    (while (< (count @top-enemies) 5)
+      (swap! top-enemies conj (atom
+                                (struct-map top-enemy
+                                  :x (utils/generate-x-coordinate) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))))
 
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
@@ -56,12 +29,12 @@
 
 (defn set-all-enemies-to-start-position
   "Setting all top enemies to starting position" []
-  (doseq [enemy top-enemies]
+  (doseq [enemy @top-enemies]
     (set-to-start-position enemy)))
 
 (defn top-enemies-update
   "Updating positions of all top screen enemies in the list" []
-  (doseq [enemy top-enemies]
+  (doseq [enemy @top-enemies]
     (if (controls/outside? enemy)
       (set-to-start-position enemy)
       (if (controls/collision? @player/player-coordinates enemy)
@@ -77,5 +50,5 @@
 
 (defn top-enemies-draw
   "Drawing all top screen enemies in the list" []
-  (doseq [enemy top-enemies]
+  (doseq [enemy @top-enemies]
     (draw-top-enemy @enemy)))
