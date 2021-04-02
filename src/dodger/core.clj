@@ -8,7 +8,6 @@
             [dodger.enemies.right-screen :as right-screen]
             [dodger.star :as star]
             [dodger.graphics :as graphics]
-            [dodger.settings :as settings]
             [dodger.utils :as utils]))
 
 (def time-elapsed (atom 0))
@@ -46,7 +45,7 @@
   (read-current-record)
   (reset! game-status :running)
   (reset! time-elapsed 0)
-  (reset! player/player-lives settings/starting-lives))
+  (reset! player/player-lives (:lives (utils/read-settings-file))))
 
 (defn pause-game
   "Pausing game" []
@@ -86,7 +85,7 @@
 
 (defn running-status-flow
   "Steps taken when game is in running mode" []
-  (do
+  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (utils/read-settings-file)]
     (count-time-elapsed)
     (graphics/draw-elapsed-time @time-elapsed)
     (check-lives-left)
@@ -96,42 +95,41 @@
     (star/stars-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
-    (when (> (/ @time-elapsed 80.0) settings/start-top-enemies-time)
+    (when (> (/ @time-elapsed 80.0) run-top-enemies)
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) settings/start-left-enemies-time)
+    (when (> (/ @time-elapsed 80.0) run-left-enemies)
       (left-screen/left-enemies-update)
       (left-screen/left-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
+    (when (> (/ @time-elapsed 80.0) run-right-enemies)
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw))))
 
 (defn paused-status-flow
   "Steps taken when game is in paused mode" []
-  (do
-    (top-screen/top-enemies-draw)
-    (bottom-screen/bottom-enemies-draw)
-    (left-screen/left-enemies-draw)
-    (right-screen/right-enemies-draw)
-    (graphics/draw-pause-screen)))
+  (top-screen/top-enemies-draw)
+  (bottom-screen/bottom-enemies-draw)
+  (left-screen/left-enemies-draw)
+  (right-screen/right-enemies-draw)
+  (graphics/draw-pause-screen))
 
-  (defn stopped-status-flow
-    "Steps taken when game is in stopped mode" []
-    (do
-      (star/star-update)
-      (star/stars-draw)
-      (top-screen/top-enemies-update)
-      (top-screen/top-enemies-draw)
-      (when (> (/ @time-elapsed 80.0) settings/start-top-enemies-time)
-        (bottom-screen/bottom-enemies-update)
-        (bottom-screen/bottom-enemies-draw))
-      (when (> (/ @time-elapsed 80.0) settings/start-left-enemies-time)
-        (left-screen/left-enemies-update)
-        (left-screen/left-enemies-draw))
-      (when (> (/ @time-elapsed 80.0) settings/start-right-enemies-time)
-        (right-screen/right-enemies-update)
-        (right-screen/right-enemies-draw))
-      (graphics/draw-game-over-screen @time-elapsed @current-record)))
+(defn stopped-status-flow
+  "Steps taken when game is in stopped mode" []
+  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (utils/read-settings-file)]
+    (star/star-update)
+    (star/stars-draw)
+    (top-screen/top-enemies-update)
+    (top-screen/top-enemies-draw)
+    (when (> (/ @time-elapsed 80.0) run-top-enemies)
+      (bottom-screen/bottom-enemies-update)
+      (bottom-screen/bottom-enemies-draw))
+    (when (> (/ @time-elapsed 80.0) run-left-enemies)
+      (left-screen/left-enemies-update)
+      (left-screen/left-enemies-draw))
+    (when (> (/ @time-elapsed 80.0) run-right-enemies)
+      (right-screen/right-enemies-update)
+      (right-screen/right-enemies-draw))
+    (graphics/draw-game-over-screen @time-elapsed @current-record)))
 
 (defn draw
   "Drawing all elements of the game" []

@@ -1,7 +1,9 @@
 (ns dodger.utils
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]))
 
 (def high-score-file "resources/high_score.txt")
+(def settings-file "resources/settings.edn")
 
 (defn generate-speed
   "Generating random enemy speed" []
@@ -42,6 +44,10 @@
   "Reading content from high score file" []
   (prepare-file)
   (slurp high-score-file))
+
+(defn read-settings-file
+  "Reading content from settings file" []
+  (edn/read-string (slurp settings-file)))
 
 (defn write-to-file
   "Writing new high score to file" [score]

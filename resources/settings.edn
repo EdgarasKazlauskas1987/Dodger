@@ -1,0 +1,5 @@
+{:run-top-enemies    10
+ :run-left-enemies   20
+ :run-right-enemies  30
+ :run-bottom-enemies 50
+ :lives              3}

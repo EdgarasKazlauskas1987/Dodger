@@ -1,6 +1,6 @@
 (ns dodger.player
   (:require [quil.core :as quil]
-            [dodger.settings :as settings]))
+            [dodger.utils :as utils]))
 
 ;;Checking if player object is withing the screen borders
 (defn within-max-x-border?
@@ -48,7 +48,7 @@
   (let [ghost (quil/state :ghost)]
     (when (quil/loaded? ghost) (quil/image ghost x y))))
 
-(def player-lives (atom settings/starting-lives))
+(def player-lives (atom (:lives (utils/read-settings-file))))
 
 (defn inc-player-lives
   "Incrementing amount of player lives left" []
