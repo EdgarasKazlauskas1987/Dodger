@@ -69,12 +69,8 @@
         (swap! enemy update-in [:x] + (get @enemy :speed))))))
 
 (defn draw-left-enemy
-  "Drawing left enemy object" [x y width]
-  (let [image-size (case width
-                     35 :enemy-left-35
-                     40 :enemy-left-40
-                     50 :enemy-left-50
-                     60 :enemy-left-60)
+  "Drawing left enemy object" [{:keys [x y width]}]
+  (let [image-size (utils/img-size-converter width "left")
         enemy-left (quil/state image-size)]
     (when (quil/loaded? enemy-left)
       (quil/image enemy-left x y))))
@@ -82,4 +78,4 @@
 (defn left-enemies-draw
   "Drawing all left screen enemies in the list" []
   (doseq [enemy left-enemies]
-    (draw-left-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
+    (draw-left-enemy @enemy)))

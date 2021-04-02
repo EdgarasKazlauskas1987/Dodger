@@ -69,12 +69,8 @@
         (swap! enemy update-in [:x] - (get @enemy :speed))))))
 
 (defn draw-right-enemy
-  "Drawing right enemy object" [x y width]
-  (let [image-size (case width
-                     35 :enemy-right-35
-                     40 :enemy-right-40
-                     50 :enemy-right-50
-                     60 :enemy-right-60)
+  "Drawing right enemy object" [{:keys [x y width]}]
+  (let [image-size (utils/img-size-converter width "right")
         enemy-right (quil/state image-size)]
     (when (quil/loaded? enemy-right)
       (quil/image enemy-right x y))))
@@ -82,4 +78,4 @@
 (defn right-enemies-draw
   "Drawing all right screen enemies in the list" []
   (doseq [enemy right-enemies]
-    (draw-right-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
+    (draw-right-enemy @enemy)))

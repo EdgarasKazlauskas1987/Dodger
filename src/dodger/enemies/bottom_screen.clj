@@ -69,12 +69,8 @@
         (swap! enemy update-in [:y] - (get @enemy :speed))))))
 
 (defn draw-bottom-enemy
-  "Drawing bottom enemy object" [x y width]
-  (let [image-size (case width
-               35 :enemy-bottom-35
-               40 :enemy-bottom-40
-               50 :enemy-bottom-50
-               60 :enemy-bottom-60)
+  "Drawing bottom enemy object" [{:keys [x y width]}]
+  (let [image-size (utils/img-size-converter width "bottom")
         enemy-bottom (quil/state image-size)]
     (when (quil/loaded? enemy-bottom)
       (quil/image enemy-bottom x y))))
@@ -82,4 +78,4 @@
 (defn bottom-enemies-draw
   "Drawing all bottom screen enemies in the list" []
   (doseq [enemy bottom-enemies]
-    (draw-bottom-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
+    (draw-bottom-enemy @enemy)))

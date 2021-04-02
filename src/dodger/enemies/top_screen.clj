@@ -69,12 +69,8 @@
         (swap! enemy update-in [:y] + (get @enemy :speed))))))
 
 (defn draw-top-enemy
-  "Drawing top enemy object" [x y width]
-  (let [image-size (case width
-                     35 :enemy-top-35
-                     40 :enemy-top-40
-                     50 :enemy-top-50
-                     60 :enemy-top-60)
+  "Drawing top enemy object" [{:keys [x y width]}]
+  (let [image-size (utils/img-size-converter width "top")
         enemy-top (quil/state image-size)]
     (when (quil/loaded? enemy-top)
       (quil/image enemy-top x y))))
@@ -82,4 +78,4 @@
 (defn top-enemies-draw
   "Drawing all top screen enemies in the list" []
   (doseq [enemy top-enemies]
-    (draw-top-enemy (get @enemy :x) (get @enemy :y) (get @enemy :width))))
+    (draw-top-enemy @enemy)))

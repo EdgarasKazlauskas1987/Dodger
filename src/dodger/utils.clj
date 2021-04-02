@@ -5,6 +5,16 @@
 (def high-score-file "resources/high_score.txt")
 (def settings-file "resources/settings.edn")
 
+(defn format-type [size type]
+  (keyword (str "enemy-" type "-"size)))
+
+(defn img-size-converter [width type]
+  (case width
+    35 (format-type 35 type)
+    40 (format-type 40 type)
+    50 (format-type 50 type)
+    60 (format-type 60 type)))
+
 (defn generate-speed
   "Generating random enemy speed" []
   (rand-nth [1 2 3]))
