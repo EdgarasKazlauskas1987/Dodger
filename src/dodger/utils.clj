@@ -27,29 +27,17 @@
     true
     false))
 
-(defn file-exist?
-  "Checking if high score file exists" []
-  (.exists (io/as-file high-score-file)))
+(defn prepare-high-score []
+  (when (false?
+          (.exists (io/as-file high-score-file)))
+    (spit high-score-file "0")))
 
-(defn create-file
-  "Creating high score file with starting value" []
-  (spit high-score-file "0"))
-
-(defn prepare-file
-  "Preparing high score file" []
-  (when (false? (file-exist?))
-    (create-file)))
-
-(defn read-from-file
+(defn read-high-score
   "Reading content from high score file" []
-  (prepare-file)
+  (prepare-high-score)
   (slurp high-score-file))
 
-(defn read-settings
-  "Reading content from settings file" []
-  (edn/read-string (slurp settings-file)))
-
-(defn write-to-file
+(defn write-high-score
   "Writing new high score to file" [score]
   (spit high-score-file score))
 
@@ -59,3 +47,6 @@
     true
     false))
 
+(defn read-settings
+  "Reading content from settings file" []
+  (edn/read-string (slurp settings-file)))

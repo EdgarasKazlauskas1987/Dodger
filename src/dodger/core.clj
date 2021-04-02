@@ -12,11 +12,11 @@
 
 (def time-elapsed (atom 0))
 (def game-status (atom :starting))
-(def current-record (atom (read-string (utils/read-from-file))))
+(def current-record (atom (read-string (utils/read-high-score))))
 
 (defn read-current-record
   "Reading current record" []
-  (reset! current-record (read-string (utils/read-from-file))))
+  (reset! current-record (read-string (utils/read-high-score))))
 
 (defn count-time-elapsed
   "Counting time elapsed by inc after every frame" []
@@ -26,7 +26,7 @@
   "Stopping the game when player lost all lives" []
   (let [current-result (int (Math/floor (/ @time-elapsed 80.0)))]
     (when (utils/new-record? current-result (int @current-record))
-      (utils/write-to-file current-result)))
+      (utils/write-high-score current-result)))
   (reset! game-status :stopped))
 
 (defn check-lives-left
@@ -144,7 +144,7 @@
                 :title "Dodger"
                 :size [900 650]
                 :setup (fn [] (quil/smooth) (quil/no-stroke) (quil/frame-rate 80)
-                         (graphics/load-images) (utils/prepare-file))
+                         (graphics/load-images) (utils/prepare-high-score))
                 :draw (fn []
                         (draw) (player/player-movement))
                 :key-pressed (fn [] (player/key-pressed)
