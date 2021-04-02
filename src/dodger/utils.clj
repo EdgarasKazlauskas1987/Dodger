@@ -45,7 +45,7 @@
   (prepare-file)
   (slurp high-score-file))
 
-(defn read-settings-file
+(defn read-settings
   "Reading content from settings file" []
   (edn/read-string (slurp settings-file)))
 

@@ -48,7 +48,7 @@
   (let [ghost (quil/state :ghost)]
     (when (quil/loaded? ghost) (quil/image ghost x y))))
 
-(def player-lives (atom (:lives (utils/read-settings-file))))
+(def player-lives (atom (:lives (utils/read-settings))))
 
 (defn inc-player-lives
   "Incrementing amount of player lives left" []
