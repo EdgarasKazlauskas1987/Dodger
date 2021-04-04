@@ -12,8 +12,9 @@
 (def bottom-enemies (atom (seq '())))
 
 (defn generate-bottom-enemies []
-  (let [size (utils/generate-size)]
-    (while (< (count @bottom-enemies) 5)
+  (let [amount (get-in (utils/read-settings) [:amount :bottom-enemies])
+        size (utils/generate-size)]
+    (while (< (count @bottom-enemies) amount)
       (swap! bottom-enemies conj (atom
                                  (struct-map bottom-enemy
                                    :x (utils/generate-x-coordinate size) :y default-y-coordinate :width size :height size :speed (utils/generate-speed)))))))
@@ -21,7 +22,7 @@
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
-    (swap! enemy assoc :y 650)
+    (swap! enemy assoc :y default-y-coordinate)
     (swap! enemy assoc :x (utils/generate-x-coordinate size))
     (swap! enemy assoc :width size)
     (swap! enemy assoc :height size)

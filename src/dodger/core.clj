@@ -35,17 +35,23 @@
   (when (neg? @player/player-lives)
     (stop-game)))
 
-(defn start-new-game
-  "Starting new game" []
-  (player/set-to-central-positiion)
+(defn generate-all-enemies []
   (top-screen/generate-top-enemies)
   (right-screen/generate-right-enemies)
   (left-screen/generate-left-enemies)
-  (bottom-screen/generate-bottom-enemies)
+  (bottom-screen/generate-bottom-enemies))
+
+(defn set-all-enemies-to-start-position []
   (top-screen/set-all-enemies-to-start-position)
   (bottom-screen/set-all-enemies-to-start-position)
   (left-screen/set-all-enemies-to-start-position)
-  (right-screen/set-all-enemies-to-start-position)
+  (right-screen/set-all-enemies-to-start-position))
+
+(defn start-new-game
+  "Starting new game" []
+  (player/set-to-central-positiion)
+  (generate-all-enemies)
+  (set-all-enemies-to-start-position)
   (read-current-record)
   (reset! game-status :running)
   (reset! time-elapsed 0)

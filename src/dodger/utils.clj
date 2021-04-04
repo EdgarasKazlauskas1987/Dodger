@@ -23,11 +23,13 @@
   (rand-nth [1 2 3]))
 
 (defn generate-x-coordinate
-  "Generating random x coordinate between 0 and 880" [width]
+  "Generating random x coordinate between 0 and 900 with deducted objects width"
+  [width]
   (rand-int (- 900 width)))
 
 (defn generate-y-coordinate
-  "Generating random y coordinate between 0 and 630" [height]
+  "Generating random y coordinate between 0 and 650 with deducted objects width"
+  [height]
   (rand-int (- 650 height)))
 
 (defn generate-size

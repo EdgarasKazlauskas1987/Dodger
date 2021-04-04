@@ -12,8 +12,9 @@
 (def left-enemies (atom (seq '())))
 
 (defn generate-left-enemies []
-  (let [size (utils/generate-size)]
-    (while (< (count @left-enemies) 5)
+  (let [amount (get-in (utils/read-settings) [:amount :left-enemies])
+        size (utils/generate-size)]
+    (while (< (count @left-enemies) amount)
       (swap! left-enemies conj (atom
                                 (struct-map left-enemy
                                   :x default-x-coordinate :y (utils/generate-y-coordinate size) :width size :height size :speed (utils/generate-speed)))))))
@@ -22,7 +23,7 @@
   "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
     (swap! enemy assoc :y (utils/generate-y-coordinate size))
-    (swap! enemy assoc :x 0)
+    (swap! enemy assoc :x default-x-coordinate)
     (swap! enemy assoc :width size)
     (swap! enemy assoc :height size)
     (swap! enemy assoc :speed (utils/generate-speed))))
