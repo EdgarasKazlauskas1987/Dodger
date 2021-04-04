@@ -24,7 +24,7 @@
 
 (defn stop-game
   "Stopping the game when player lost all lives" []
-  (let [current-result (int (Math/floor (/ @time-elapsed 80.0)))]
+  (let [current-result (int (Math/floor (utils/calc-sec-elapsed @time-elapsed)))]
     (when (utils/new-record? current-result (int @current-record))
       (utils/write-high-score current-result)))
   (reset! game-status :stopped))
@@ -99,13 +99,13 @@
     (star/stars-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
-    (when (> (/ @time-elapsed 80.0) run-top-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-top-enemies)
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) run-left-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-left-enemies)
       (left-screen/left-enemies-update)
       (left-screen/left-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) run-right-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-right-enemies)
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw))))
 
@@ -124,13 +124,13 @@
     (star/stars-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
-    (when (> (/ @time-elapsed 80.0) run-top-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-top-enemies)
       (bottom-screen/bottom-enemies-update)
       (bottom-screen/bottom-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) run-left-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-left-enemies)
       (left-screen/left-enemies-update)
       (left-screen/left-enemies-draw))
-    (when (> (/ @time-elapsed 80.0) run-right-enemies)
+    (when (> (utils/calc-sec-elapsed @time-elapsed) run-right-enemies)
       (right-screen/right-enemies-update)
       (right-screen/right-enemies-draw))
     (graphics/draw-game-over-screen @time-elapsed @current-record)))

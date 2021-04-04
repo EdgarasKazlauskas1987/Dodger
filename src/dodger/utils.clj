@@ -15,6 +15,9 @@
     50 (format-type 50 type)
     60 (format-type 60 type)))
 
+(defn calc-sec-elapsed [time]
+  (/ time 80.0))
+
 (defn generate-speed
   "Generating random enemy speed" []
   (rand-nth [1 2 3]))

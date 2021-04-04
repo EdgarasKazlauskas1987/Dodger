@@ -35,14 +35,14 @@
 
 (defn draw-game-over-screen
   "Drawing screen when game is over" [time-elapsed current-record]
-  (let [result (int (Math/floor (/ time-elapsed 80.0)))]
+  (let [result (int (Math/floor (utils/calc-sec-elapsed time-elapsed)))]
     (quil/fill 0 0 0)
     (quil/rect 250 100 400 450)
     (quil/fill 255 255 255)
     (quil/text-font (quil/create-font "Tahoma Bold" 35))
     (quil/text "GAME OVER" 338 180)
     (quil/text-font (quil/create-font "Courier New Bold" 30))
-    (quil/text (str "Your result is " (str (int (Math/floor (/ time-elapsed 80.0))))) 295 275)
+    (quil/text (str "Your result is " (str (int (Math/floor (utils/calc-sec-elapsed time-elapsed))))) 295 275)
     (when (utils/new-record? result (int current-record))
       (quil/text "NEW RECORD!" 345 330))
     (quil/text "Play again?" 340 395)
@@ -52,7 +52,7 @@
   "Drawing elapsed time in seconds" [time-elapsed]
   (quil/fill (quil/color 255 255 255))
   (quil/text-size 20)
-  (quil/text (str "TIME: " (str (int (Math/floor (/ time-elapsed 80.0))))) 10 30 40))
+  (quil/text (str "TIME: " (str (int (Math/floor (utils/calc-sec-elapsed time-elapsed))))) 10 30 40))
 
 (defn draw-player-lives-left
   "Drawing amount of player lives left" [player-lives]
