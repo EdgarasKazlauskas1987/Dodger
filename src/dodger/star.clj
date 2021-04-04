@@ -4,17 +4,20 @@
             [dodger.player :as player]
             [dodger.controls :as controls]))
 
-(def star (atom {:x        (utils/generate-x-coordinate)
-                 :y        (utils/generate-y-coordinate)
+(def str-width (get-in (utils/read-settings) [:sizes :star :width]))
+(def str-height (get-in (utils/read-settings) [:sizes :star :height]))
+
+(def star (atom {:x        (utils/generate-x-coordinate str-width)
+                 :y        (utils/generate-y-coordinate str-height)
                  :addsLife (utils/addLife?)
-                 :width 50 :height 50 :time 0}))
+                 :width str-width :height str-height :time 0}))
 
 (def stars (seq [star]))
 
 (defn set-to-new-position
   "Setting star object to new position" [star]
-  (swap! star assoc :x (utils/generate-x-coordinate))
-  (swap! star assoc :y (utils/generate-y-coordinate))
+  (swap! star assoc :x (utils/generate-x-coordinate str-width))
+  (swap! star assoc :y (utils/generate-y-coordinate str-height))
   (swap! star assoc :addsLife (utils/addLife?))
   (swap! star assoc :time 0))
 

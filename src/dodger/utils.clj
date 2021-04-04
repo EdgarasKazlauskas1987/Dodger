@@ -23,12 +23,12 @@
   (rand-nth [1 2 3]))
 
 (defn generate-x-coordinate
-  "Generating random x coordinate between 0 and 880" []
-  (rand-int 880))
+  "Generating random x coordinate between 0 and 880" [width]
+  (rand-int (- 900 width)))
 
 (defn generate-y-coordinate
-  "Generating random y coordinate between 0 and 630" []
-  (rand-int 630))
+  "Generating random y coordinate between 0 and 630" [height]
+  (rand-int (- 650 height)))
 
 (defn generate-size
   "Generating random enemy size" []

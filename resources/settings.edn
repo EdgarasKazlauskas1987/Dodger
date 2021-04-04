@@ -2,4 +2,6 @@
  :run-left-enemies   20
  :run-right-enemies  30
  :run-bottom-enemies 50
- :lives              3}
+ :lives              3
+ :sizes              {:star {:width  50
+                             :height 50}}}

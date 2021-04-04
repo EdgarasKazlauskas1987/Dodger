@@ -16,12 +16,12 @@
     (while (< (count @right-enemies) 5)
       (swap! right-enemies conj (atom
                                   (struct-map right-enemy
-                                    :x default-x-coordinate :y (utils/generate-y-coordinate) :width size :height size :speed (utils/generate-speed)))))))
+                                    :x default-x-coordinate :y (utils/generate-y-coordinate size) :width size :height size :speed (utils/generate-speed)))))))
 
 (defn set-to-start-position
   "Setting enemy to starting position" [enemy]
   (let [size (utils/generate-size)]
-    (swap! enemy assoc :y (utils/generate-y-coordinate))
+    (swap! enemy assoc :y (utils/generate-y-coordinate size))
     (swap! enemy assoc :x 900)
     (swap! enemy assoc :width size)
     (swap! enemy assoc :height size)
