@@ -1,7 +1,7 @@
-{:run-top-enemies    10
- :run-left-enemies   20
- :run-right-enemies  30
- :run-bottom-enemies 50
- :lives              3
- :sizes              {:star {:width  50
-                             :height 50}}}
+{:time  {:run-top-enemies    10
+         :run-left-enemies   20
+         :run-right-enemies  30
+         :run-bottom-enemies 50}
+ :lives 3
+ :sizes {:star {:width  50
+                :height 50}}}

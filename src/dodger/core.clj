@@ -89,7 +89,7 @@
 
 (defn running-status-flow
   "Steps taken when game is in running mode" []
-  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (utils/read-settings)]
+  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (:time (utils/read-settings))]
     (count-time-elapsed)
     (graphics/draw-elapsed-time @time-elapsed)
     (check-lives-left)
@@ -119,7 +119,7 @@
 
 (defn stopped-status-flow
   "Steps taken when game is in stopped mode" []
-  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (utils/read-settings)]
+  (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (:time (utils/read-settings))]
     (star/star-update)
     (star/stars-draw)
     (top-screen/top-enemies-update)
