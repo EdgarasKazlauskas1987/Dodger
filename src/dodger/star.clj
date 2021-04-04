@@ -12,10 +12,8 @@
                  :addsLife (utils/addLife?)
                  :width str-width :height str-height :time 0}))
 
-(def stars (seq [star]))
-
 (defn set-to-new-position
-  "Setting star object to new position" [star]
+  "Setting star object to new position" []
   (swap! star assoc :x (utils/generate-x-coordinate str-width))
   (swap! star assoc :y (utils/generate-y-coordinate str-height))
   (swap! star assoc :addsLife (utils/addLife?))
@@ -23,24 +21,18 @@
 
 (defn star-update
   "Updating star objects" []
-  (doseq [star stars]
+  (swap! star update-in [:time] inc)
+  (when (> (/ (get @star :time) 80.0) 10)
+    (set-to-new-position)
+    (player/dec-player-lives))
+  (when (controls/collision? @player/player-coordinates star)
     (do
-      (swap! star update-in [:time] inc)
-      (when (> (/ (get @star :time) 80.0) 10)
-        (set-to-new-position star)
-        (player/dec-player-lives))
-      (when (controls/collision? @player/player-coordinates star)
-        (do
-          (when (true? (get @star :addsLife))
-            (player/inc-player-lives))
-          (set-to-new-position star))))))
+      (when (true? (get @star :addsLife))
+        (player/inc-player-lives))
+      (set-to-new-position))))
 
-(defn draw-star
-  "Drawing star object" [x y]
-  (let [star (quil/state :star)]
+(defn star-draw
+  "Drawing star object" []
+  (let [{:keys [x y]} @star
+        star (quil/state :star)]
     (when (quil/loaded? star) (quil/image star x y))))
-
-(defn stars-draw
-  "Drawing all star objects in the list" []
-  (doseq [star stars]
-    (draw-star (get @star :x) (get @star :y))))

@@ -52,6 +52,7 @@
   (player/set-to-central-positiion)
   (generate-all-enemies)
   (set-all-enemies-to-start-position)
+  (star/set-to-new-position)
   (read-current-record)
   (reset! game-status :running)
   (reset! time-elapsed 0)
@@ -102,7 +103,7 @@
     (graphics/draw-player-lives-left @player/player-lives)
     (player/draw-player (get @player/player-coordinates :x) (get @player/player-coordinates :y))
     (star/star-update)
-    (star/stars-draw)
+    (star/star-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
     (when (> (utils/calc-sec-elapsed @time-elapsed) run-top-enemies)
@@ -127,7 +128,7 @@
   "Steps taken when game is in stopped mode" []
   (let [{:keys [run-top-enemies run-left-enemies run-right-enemies]} (:time (utils/read-settings))]
     (star/star-update)
-    (star/stars-draw)
+    (star/star-draw)
     (top-screen/top-enemies-update)
     (top-screen/top-enemies-draw)
     (when (> (utils/calc-sec-elapsed @time-elapsed) run-top-enemies)
